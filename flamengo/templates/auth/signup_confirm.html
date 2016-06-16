@@ -1,0 +1,33 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+  {{ super() }}
+
+  <div class="container">
+    <div style="width: 40%; margin: 0 auto; margin-top: 30px;">
+      <form action="" method="post">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" id="email"
+            name="email" disabled value="{{ email }}"
+            placeholder="User name">
+        </div>
+        <div class="form-group">
+          <label for="password1">Password</label>
+          <input type="password" class="form-control" id="password1"
+            name="password1"
+            placeholder="Password">
+        </div>
+        <div class="form-group">
+          <label for="password2">Confirm Password</label>
+          <input type="password" class="form-control" id="password2"
+            name="password2"
+            placeholder="Confirm Password">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

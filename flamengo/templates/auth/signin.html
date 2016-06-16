@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+  {{ super() }}
+
+  <div class="container">
+    <div style="width: 40%; margin: 0 auto; margin-top: 30px;">
+      <form action="" method="post">
+        <div class="form-group">
+          <label for="email">User name</label>
+          <input type="email" class="form-control" id="email"
+            name="email"
+            placeholder="User name">
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password"
+            name="password"
+            placeholder="Password">
+        </div>
+        <div class="checkbox">
+          <div class="pull-right">
+            <a href="{{ url_for('auth.signup') }}">Sign up</a>
+          </div>
+          <label>
+            <input type="checkbox"> remember me
+          </label>
+        </div>
+        <button type="submit" class="btn btn-default">Sign in</button>
+      </form>
+    </div>
+  </div>
+
+{% endblock %}

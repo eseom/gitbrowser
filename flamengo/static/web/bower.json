@@ -1,0 +1,28 @@
+{
+  "name": "flamengo",
+  "authors": [
+    "EomEunseok <me@eseom.org>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.5.6",
+    "angular-ui-router": "^0.3.1",
+    "angular-animate": "^1.5.6",
+    "bootstrap": "^3.3.6",
+    "domready": "^1.0.8",
+    "requirejs": "^2.2.0",
+    "angular-sanitize": "^1.5.7"
+  }
+}

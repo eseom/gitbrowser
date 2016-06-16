@@ -1,0 +1,2 @@
+recursive-include flamengo/static *
+recursive-include flamengo/templates *

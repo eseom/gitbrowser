@@ -1,0 +1,28 @@
+<div class="panel main-panel">
+
+  <div class="panel-header">
+    <h4>commits</h4>
+  </div>
+
+  <div class="panel-body">
+    <ul class="list-unstyled commit-horizontal-box">
+      <li ng-repeat="c in list">
+        <div class="">
+          <a class="hash-link"
+             href ui-sref="commit({group: stateParams.group, repo: stateParams.repo, hexsha:c.hexsha})">{{ c.hexsha }}</a>
+
+          <div class="meta">
+            <span>{{ c.committed_date }}</span><br><strong>{{ c.committer }}</strong>
+
+            <div class="message">
+              <pre class="commit-message">{{ c.message }}</pre>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="tt">
+
+  </div>
+</div>

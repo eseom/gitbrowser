@@ -1,0 +1,31 @@
+body {
+    font-family: 'source sans pro';
+}
+
+.header {
+    background-color: #F5F7FA;
+    padding: 5px 0;
+}
+
+.header-title {
+    position: relative;
+    padding-left: 20px;
+}
+
+.header svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 4px;
+    color: #bbb;
+}
+
+.navbar-inverse {
+    background-color: #0F2535;
+    border-radius: 0;
+    margin-bottom: 0;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #ccc;
+}
