@@ -20,7 +20,7 @@ def create_app(env='dev'):
     db.init_app(app)
     login_manager = LoginManager()
     login_manager.session_protection = 'strong'
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = 'auth.signin'
     login_manager.init_app(app)
 
     @login_manager.user_loader

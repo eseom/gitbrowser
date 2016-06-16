@@ -6,18 +6,27 @@
 
   <div class="container">
     <div style="width: 40%; margin: 0 auto; margin-top: 30px;">
-      <form action="" method="post">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-warning">
+              <p>{{ message }}</p>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      <form action="" method="post" novalidate>
         <div class="form-group">
           <label for="email">User name</label>
           <input type="email" class="form-control" id="email"
-            name="email"
-            placeholder="User name">
+                 name="email"
+                 placeholder="User name">
         </div>
         <div class="form-group">
           <label for="password">Password</label>
           <input type="password" class="form-control" id="password"
-            name="password"
-            placeholder="Password">
+                 name="password"
+                 placeholder="Password">
         </div>
         <div class="checkbox">
           <div class="pull-right">

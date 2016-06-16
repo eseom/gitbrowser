@@ -43,13 +43,15 @@ define([], function () {
       if (path !== '')
         first = [{type: 'system', name: '(parent directory)'}];
       var list = first.concat(tree.data.list);
+
       $scope.list = list;
+      $scope.branches = tree.data.branches;
 
       $scope.back = function () {
         var p = path.split('/');
         var url = p.slice(0, p.length - 1).join('/');
         $state.go('tree', {group: group, repo: repo, branch: branch, path: url})
-      }
+      };
     }
   };
 });

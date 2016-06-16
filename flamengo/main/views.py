@@ -6,63 +6,27 @@ import difflib
 from os import listdir, path as ospath
 
 import pygments
-from flask import Blueprint, current_app, jsonify
-from git import *
+from flask import Blueprint, current_app, jsonify, redirect, url_for
+from flask.ext.login import current_user, login_required
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import guess_lexer_for_filename
 from pygments.lexers.special import TextLexer
+from .. import util
 
 main = Blueprint('main', __name__, static_folder='../static')
 
 
-def pretty_date(time=False):
-    """
-    http://stackoverflow.com/questions/1551382/user-friendly-time-format-in-python
-    Get a datetime object or a int() Epoch timestamp and return a
-    pretty string like 'an hour ago', 'Yesterday', '3 months ago',
-    'just now', etc
-    :type time: time object
-    """
-    from datetime import datetime
-    now = datetime.now()
-    if type(time) is int:
-        diff = now - datetime.fromtimestamp(time)
-    elif isinstance(time, datetime):
-        diff = now - time
-    elif not time:
-        diff = now - now
-    second_diff = diff.seconds
-    day_diff = diff.days
-
-    if day_diff < 0:
-        return ''
-
-    if day_diff == 0:
-        if second_diff < 10:
-            return "just now"
-        if second_diff < 60:
-            return str(second_diff) + " seconds ago"
-        if second_diff < 120:
-            return "a minute ago"
-        if second_diff < 3600:
-            return str(int(second_diff / 60)) + " minutes ago"
-        if second_diff < 7200:
-            return "an hour ago"
-        if second_diff < 86400:
-            return str(int(second_diff / 3600)) + " hours ago"
-    if day_diff == 1:
-        return "Yesterday"
-    if day_diff < 7:
-        return str(day_diff) + " days ago"
-    if day_diff < 31:
-        return str(int(day_diff / 7)) + " weeks ago"
-    if day_diff < 365:
-        return str(int(day_diff / 30)) + " months ago"
-    return str(int(day_diff / 365)) + " years ago"
+@main.route('/')
+def index():
+    if current_user.get_id():
+        return redirect(url_for('main.app'))
+    else:
+        return redirect(url_for('auth.signin'))
 
 
 @main.route('/app')
+@login_required
 def app():
     return main.send_static_file('web/app/index.html')
 
@@ -99,6 +63,7 @@ def show_debug():
 
 @main.route('/repos')
 @main.route('/repos/<string:group>')
+@util.login_required_restful
 def repos(group=None):
     rpl = []
     repo_dir = ospath.join(current_app.config['REPO_DIR'], 'repo')
@@ -114,23 +79,29 @@ def repos(group=None):
 
 @main.route(
     '/commits/<string:group>/<string:repo>/<string:branch>/<int:take>/<int:skip>')
+@util.login_required_restful
 def commits(group, repo, branch, take=10, skip=0):
-    rp = get_repo(group, repo)
+    rp = util.get_repo(group, repo)
     commits = list([dict(
         hexsha=l.hexsha,
         message=l.message,
         committer=str(l.committer) + ' <' + l.committer.email + '>',
-        committed_date=pretty_date(l.committed_date)
+        committed_date=util.pretty_date(l.committed_date)
     ) for l in rp.iter_commits(branch, max_count=take, skip=skip)])
     return jsonify(dict(result=True, commits=commits))
 
 
-@main.route('/tree/<string:group>/<string:repo>/<string:branch>/')
-@main.route(
-    '/tree/<string:group>/<string:repo>/<string:branch>/<path:path>')
+@main.route('/tree/<string:group>'
+            '/<string:repo>/<string:branch>/')
+@main.route('/tree/<string:group>/<string:repo>'
+            '/<string:branch>/<path:path>')
+@util.login_required_restful
 def tree(group, repo, branch='master', path=''):
-    rp = get_repo(group, repo)
+    rp = util.get_repo(group, repo)
+    # change head to the branch
+    rp.head.ref = rp.heads[branch]
     tree = rp.tree()
+    branches = [str(h) for h in rp.heads]
 
     if path:
         for p in path.split('/'):
@@ -140,40 +111,38 @@ def tree(group, repo, branch='master', path=''):
     for t in tree.trees:
         commit = None
         # TODO cache point
-        for c in rp.iter_commits('master', paths=t.path, max_count=1, skip=0):
+        for c in rp.iter_commits(branch, paths=t.path, max_count=1, skip=0):
             commit = c
         tblist.append(dict(name=t.name, type='tree', commit=dict(
             hexsha=commit.hexsha,
             message=commit.message,
-            date=pretty_date(commit.committed_date)
+            date=util.pretty_date(commit.committed_date)
         )))
     for t in tree.blobs:
         commit = None
         # TODO cache point
-        for c in rp.iter_commits('master', paths=t.path, max_count=1, skip=0):
+        for c in rp.iter_commits(branch, paths=t.path, max_count=1, skip=0):
             commit = c
         tblist.append(dict(name=t.name, type='blob', commit=dict(
             hexsha=commit.hexsha,
             message=commit.message,
-            date=pretty_date(commit.committed_date)
+            date=util.pretty_date(commit.committed_date)
         )))
-    return jsonify(dict(list=tblist))
+    return jsonify(dict(list=tblist, branches=branches))
 
 
 @main.route('/commit/count/<string:group>/<string:repo>/<string:branch>')
+@util.login_required_restful
 def commit_count(group, repo, branch):
-    rp = get_repo(group, repo)
+    rp = util.get_repo(group, repo)
+    rp.head.ref = rp.refs[branch]
     return jsonify(dict(count=rp.commit().count()))
 
 
-def get_repo(group, repo):
-    return Repo(
-        ospath.join(current_app.config['REPO_DIR'], 'repo', group, repo))
-
-
 @main.route('/blob/<string:group>/<string:repo>/<string:branch>/<path:path>')
+@util.login_required_restful
 def blob(group, repo, branch, path):
-    rp = get_repo(group, repo)
+    rp = util.get_repo(group, repo)
     tree = rp.tree()
 
     if path:
@@ -204,8 +173,9 @@ def blob(group, repo, branch, path):
 
 
 @main.route('/commit/<string:group>/<string:repo>/<string:hexsha>')
+@util.login_required_restful
 def commit(group, repo, hexsha):
-    rp = get_repo(group, repo)
+    rp = util.get_repo(group, repo)
 
     # get commit object
     commit = rp.commit(hexsha)
@@ -241,7 +211,7 @@ def commit(group, repo, hexsha):
             message=commit.message,
             committer=str(
                 commit.committer) + ' <' + commit.committer.email + '>',
-            committed_date=pretty_date(commit.committed_date)
+            committed_date=util.pretty_date(commit.committed_date)
         ),
         diff_contents=diff_contents,
         parents=parents,

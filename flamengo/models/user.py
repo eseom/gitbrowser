@@ -8,7 +8,7 @@ from .base import db, sa_unicode
 def _get_encrypted_password(password):
     sha = hashlib.sha512()
     sha.update(password.encode('utf-8'))
-    return '{SHA512}%s' % base64.b64encode(sha.digest())
+    return '{SHA512}%s' % base64.b64encode(sha.digest()).decode('utf-8')
 
 
 class User(db.Model):
