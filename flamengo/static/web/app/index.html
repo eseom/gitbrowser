@@ -5,10 +5,7 @@
   <title>flamengo</title>
   <link rel="stylesheet"
         href="bower_components/bootstrap/dist/css/bootstrap.css">
-  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700'
-        rel='stylesheet' type='text/css'>
-  <link href='https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700'
-        rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="vendor/diffview/diffview.css">
   <link rel="stylesheet" href="css/app.css">
@@ -25,6 +22,7 @@
         <h1>
           Flamengo is Loading
         </h1>
+
         <p>
           Please stand by for your ticket to awesome-town!
         </p>
@@ -76,7 +74,7 @@
             show-during-resolve> Loading...</span></a></li>
           <li class="dropdown">
             <a href class="dropdown-toggle" data-toggle="dropdown"
-              role="button" aria-haspopup="true" aria-expanded="false">red@custdomain.com
+               role="button" aria-haspopup="true" aria-expanded="false">red@custdomain.com
               <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="/auth/signout">Sign out</a></li>
@@ -138,15 +136,15 @@
           </div>
 
           <div ng-if="stateParams.group && stateParams.repo">
-              <ul class="list-inline repo-navigation">
-                <li>
-                  <a href ui-sref="dashboard({group: stateParams.group})">{{ stateParams.group }}</a>
-                </li>
-                <li>/</li>
-                <li>
-                  <a href ui-sref="tree({group: stateParams.group, repo: stateParams.repo, path: 'master'})">{{ stateParams.repo }}</a>
-                </li>
-              </ul>
+            <ul class="list-inline repo-navigation">
+              <li>
+                <a href ui-sref="dashboard({group: stateParams.group})">{{ stateParams.group }}</a>
+              </li>
+              <li>/</li>
+              <li>
+                <a href ui-sref="tree({group: stateParams.group, repo: stateParams.repo, path: 'master'})">{{ stateParams.repo }}</a>
+              </li>
+            </ul>
           </div>
         </h4>
       </div>

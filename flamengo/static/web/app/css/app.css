@@ -1,6 +1,6 @@
 body {
     font-size: 13px;
-    /*font-family: 'source sans pro', serif;*/
+    font-family: 'roboto', serif;
     /*background-color: #F5F7FA;*/
 }
 
@@ -109,6 +109,16 @@ body {
 .tree-table td.date {
     text-align: right;
 }
+
+pre.commit-message {
+    font-family: 'source sans pro', serif;
+    background-color: transparent;
+    font-size: 13px;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
 
 /* -----------------------
  * highlight
