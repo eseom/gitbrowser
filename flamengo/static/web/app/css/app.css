@@ -1,6 +1,6 @@
 body {
     font-size: 13px;
-    font-family: 'roboto', serif;
+    font-family: 'roboto', Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     /*background-color: #F5F7FA;*/
 }
 
@@ -111,7 +111,6 @@ body {
 }
 
 pre.commit-message {
-    font-family: 'source sans pro', serif;
     background-color: transparent;
     font-size: 13px;
     border: 0;
@@ -127,9 +126,6 @@ pre.commit-message {
 .codehilite table {
     width: 100%;
 }
-.codehilite table th {
-    padding-right: 10px;
-}
 .codehilite table td {
     background-color: white;
 }
@@ -141,6 +137,7 @@ pre.commit-message {
 }
 
 .codehilite table td.code {
+    width: 100%;
     padding-left: 10px;
 
 }
