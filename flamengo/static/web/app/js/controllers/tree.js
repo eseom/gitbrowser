@@ -39,7 +39,7 @@ define([], function () {
 
       /* */
       var first = [];
-      if (path !== '')
+      if (path !== $scope.branch)
         first = [{type: 'system', name: '(parent directory)'}];
       var list = first.concat(tree.data.list);
 
@@ -49,7 +49,7 @@ define([], function () {
       $scope.back = function () {
         var p = path.split('/');
         var url = p.slice(0, p.length - 1).join('/');
-        $state.go('tree', {group: group, repo: repo, branch: branch, path: url})
+        $state.go('tree', {group: group, repo: repo, path: url})
       };
       $scope.gotoAnotherBranch = function (branch) {
         $state.go('tree', {group: group, repo: repo, path: branch})
