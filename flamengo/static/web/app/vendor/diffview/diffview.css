@@ -41,6 +41,7 @@ table.diff tbody td {
     padding-top: .4em;
     vertical-align: top;
     width: 50%;
+    word-break: break-all;
 }
 
 table.diff .empty {

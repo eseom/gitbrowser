@@ -164,7 +164,9 @@ def blob(group, repo, path):
 
     # monkey patching
     from pygments.lexers.configs import NginxConfLexer
+    from pygments.lexers.html import HtmlLexer
     NginxConfLexer.filenames = ['nginx.conf']
+    HtmlLexer.filenames += ['*.ejs']
 
     # set lexer
     try:
@@ -176,7 +178,7 @@ def blob(group, repo, path):
     lexer.stripnl = False
 
     blob_content = highlight(blob_content, lexer, HtmlFormatter(
-        linenos='inline',
+        linenos='table',
         style='colorful'))
 
     return jsonify(dict(blob_content=blob_content, path=path, branch=branch))
