@@ -71,3 +71,17 @@ def pretty_date(time=False):
 def get_repo(group, repo):
     return Repo(
         ospath.join(current_app.config['REPO_DIR'], 'repo', group, repo))
+
+
+def select_branch(rp, path):
+    matched_ref = None
+    for r in rp.refs:
+        if path.startswith(r.name):
+            matched_ref = r
+            break
+
+    if not matched_ref:
+        # @TODO error 404
+        pass
+
+    return matched_ref

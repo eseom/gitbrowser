@@ -1,21 +1,21 @@
 define([], function () {
   'use strict';
   return {
-    url: '/blob/:group/:repo/:branch/{path:any}',
+    url: '/blob/:group/:repo/{path:any}',
     resolve: {
       blob: function ($http, $stateParams) {
         var group = $stateParams.group,
           repo = $stateParams.repo,
-          branch = $stateParams.branch,
           path = $stateParams.path || '';
         return $http({
-          url: '/blob/' + group + '/' + repo + '/' + branch + '/' + path,
+          url: '/blob/' + group + '/' + repo + '/' + path,
           method: 'GET'
         });
       }
     },
     controller: function blobCtrl($scope, $state, $sce, $stateParams, $http, blob) {
-      $scope.blob_content = blob.data.blob_content
+      $scope.blob_content = blob.data.blob_content;
+      $scope.path = blob.data.path;
     }
   }
 });

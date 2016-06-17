@@ -138,51 +138,27 @@
           </div>
 
           <div ng-if="stateParams.group && stateParams.repo">
-            <div ng-if="stateParams.branch">
               <ul class="list-inline repo-navigation">
                 <li>
                   <a href ui-sref="dashboard({group: stateParams.group})">{{ stateParams.group }}</a>
                 </li>
                 <li>/</li>
                 <li>
-                  <a href ui-sref="tree({group: stateParams.group, repo: stateParams.repo, branch: 'master'})">{{ stateParams.repo }}</a>
-                </li>
-                <li>/</li>
-                <li>{{ stateParams.branch }}</li>
-              </ul>
-            </div>
-            <div ng-if="!stateParams.branch">
-              <ul class="list-inline repo-navigation">
-                <li>
-                  <a href ui-sref="dashboard({group: stateParams.group})">{{ stateParams.group }}</a>
-                </li>
-                <li>/</li>
-                <li>
-                  <a href ui-sref="tree({group: stateParams.group, repo: stateParams.repo, branch: 'master'})">{{ stateParams.repo }}</a>
+                  <a href ui-sref="tree({group: stateParams.group, repo: stateParams.repo, path: 'master'})">{{ stateParams.repo }}</a>
                 </li>
               </ul>
-            </div>
           </div>
         </h4>
       </div>
     </div>
 
-    <div class="container menu" ng-if="stateParams.branch">
+    <div class="container menu">
       <ul class="list-inline">
         <li>
           <a href ui-sref-active="active"
-             ui-sref="commits({group: stateParams.group, repo: stateParams.repo, branch: stateParams.branch, take:15, skip:0})">
+             ui-sref="commits({group: stateParams.group, repo: stateParams.repo, branch: 'master', take:15, skip:0})">
             commits</a>
         </li>
-        <li>
-          <a href ui-sref-active="active"
-             ui-sref="tree({group: stateParams.group, repo: stateParams.repo, branch: stateParams.branch, path: ''})">files</a>
-        </li>
-        <!--
-        <li>
-          <a href ui-sref="branches">branches</a>
-        </li>
-        -->
       </ul>
     </div>
   </div>

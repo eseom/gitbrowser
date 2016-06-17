@@ -1,24 +1,23 @@
 define([], function () {
   'use strict';
   return {
-    url: '/tree/:group/:repo/:branch/{path:any}',
+    url: '/tree/:group/:repo/{path:any}',
     resolve: {
       tree: function ($http, $stateParams) {
         var group = $stateParams.group,
           repo = $stateParams.repo,
-          branch = $stateParams.branch,
           path = $stateParams.path || '';
         return $http({
-          url: '/tree/' + group + '/' + repo + '/' + branch + '/' + path,
+          url: '/tree/' + group + '/' + repo + '/' + path,
           method: 'GET'
         });
       },
       commitCount: function ($http, $stateParams) {
         var group = $stateParams.group,
           repo = $stateParams.repo,
-          branch = $stateParams.branch;
+          path = $stateParams.path || '';
         return $http({
-          url: '/commit/count/' + group + '/' + repo + '/' + branch,
+          url: '/commit/count/' + group + '/' + repo + '/' + path,
           method: 'GET'
         });
       }
@@ -32,9 +31,9 @@ define([], function () {
                                   commitCount) {
       var group = $stateParams.group,
         repo = $stateParams.repo,
-        branch = $stateParams.branch,
         path = $stateParams.path || '';
 
+      $scope.branch = tree.data.current_branch;
       $scope.list = [];
       $scope.commitCount = commitCount.data.count;
 

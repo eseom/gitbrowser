@@ -91,19 +91,25 @@ def commits(group, repo, branch, take=10, skip=0):
     return jsonify(dict(result=True, commits=commits))
 
 
-@main.route('/tree/<string:group>'
-            '/<string:repo>/<string:branch>/')
-@main.route('/tree/<string:group>/<string:repo>'
-            '/<string:branch>/<path:path>')
+@main.route('/tree/<string:group>/<string:repo>/<path:path>')
 @util.login_required_restful
-def tree(group, repo, branch='master', path=''):
+def tree(group, repo, path=''):
+    """
+    :param group:
+    :param repo:
+    :param path: include the branch as prefix
+    :return:
+    """
     rp = util.get_repo(group, repo)
     # change head to the branch
-    rp.head.ref = rp.heads[branch]
+    ref = util.select_branch(rp, path)
+    rp.head.ref = ref
+    path = path.replace(ref.name, '').strip('/')
+    branch = ref.name
     tree = rp.tree()
     branches = [str(h) for h in rp.heads]
 
-    if path:
+    if path and path != '/':  # ignore trailing slash
         for p in path.split('/'):
             tree = tree[p]
 
@@ -128,21 +134,24 @@ def tree(group, repo, branch='master', path=''):
             message=commit.message,
             date=util.pretty_date(commit.committed_date)
         )))
-    return jsonify(dict(list=tblist, branches=branches))
+    return jsonify(dict(list=tblist, current_branch=branch, branches=branches))
 
 
-@main.route('/commit/count/<string:group>/<string:repo>/<string:branch>')
+@main.route('/commit/count/<string:group>/<string:repo>/<path:path>')
 @util.login_required_restful
-def commit_count(group, repo, branch):
+def commit_count(group, repo, path):
     rp = util.get_repo(group, repo)
-    rp.head.ref = rp.refs[branch]
+    rp.head.ref = util.select_branch(rp, path)
     return jsonify(dict(count=rp.commit().count()))
 
 
-@main.route('/blob/<string:group>/<string:repo>/<string:branch>/<path:path>')
+@main.route('/blob/<string:group>/<string:repo>/<path:path>')
 @util.login_required_restful
-def blob(group, repo, branch, path):
+def blob(group, repo, path):
     rp = util.get_repo(group, repo)
+    ref = util.select_branch(rp, path)
+    branch = ref.name
+    path = path.replace(ref.name, '').strip('/')
     tree = rp.tree()
 
     if path:
@@ -169,7 +178,7 @@ def blob(group, repo, branch, path):
         linenos='inline',
         style='colorful'))
 
-    return jsonify(dict(blob_content=blob_content))
+    return jsonify(dict(blob_content=blob_content, path=path, branch=branch))
 
 
 @main.route('/commit/<string:group>/<string:repo>/<string:hexsha>')

@@ -1,0 +1,23 @@
+<div class="btn-group" uib-dropdown>
+  <button type="button" class="btn btn-sm btn-default" uib-dropdown-toggle
+    ng-disabled="disabled">
+    {{ currentBranch }}
+    <span class="caret"></span>
+  </button>
+
+  <style>
+    .branch-indicator li {
+      font-size: 90%;
+    }
+
+    .branch-indicator li.active > a {
+    }
+  </style>
+
+  <ul class="dropdown-menu branch-indicator" uib-dropdown-menu role="menu"
+    aria-labelledby="split-button">
+    <li role="menuitem"
+      ng-class="{active: b === currentBranch}"
+      ng-repeat="b in branches"><a href ui-sref="tree({path: b})">{{ b }}</a></li>
+  </ul>
+</div>
