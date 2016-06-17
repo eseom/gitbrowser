@@ -15,8 +15,10 @@
     <clone-indicator cloneurl="'http://localhost:5000/opensources/flask.git'"
       class="pull-right"></clone-indicator>
 
-    <branch-indicator branches="branches"
+    <branch-indicator
+      branches="branches"
       currentbranch="branch"
+      urlcallback="gotoAnotherBranch"
       style="margin-bottom: 10px;"></branch-indicator>
 
   </div>

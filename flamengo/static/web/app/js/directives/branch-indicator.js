@@ -4,7 +4,8 @@ define([], function () {
       replace: true,
       scope: {
         branches: '=branches',
-        currentBranch: '=currentbranch'
+        currentBranch: '=currentbranch',
+        urlcallback: '=urlcallback'
       },
       templateUrl: 'html/directives/branch-indicator.html'
     });

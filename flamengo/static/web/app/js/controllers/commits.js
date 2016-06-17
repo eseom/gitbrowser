@@ -16,7 +16,11 @@ define([], function () {
       }
     },
     controller: function commitsCtrl($scope, $state, $stateParams, $http, commits) {
+      $scope.branches = commits.data.branches;
       $scope.list = commits.data.commits;
+      $scope.gotoAnotherBranch = function (branch) {
+        $state.go('commits', {branch: branch})
+      }
     }
   }
 });

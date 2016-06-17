@@ -51,6 +51,9 @@ define([], function () {
         var url = p.slice(0, p.length - 1).join('/');
         $state.go('tree', {group: group, repo: repo, branch: branch, path: url})
       };
+      $scope.gotoAnotherBranch = function (branch) {
+        $state.go('tree', {group: group, repo: repo, path: branch})
+      }
     }
   };
 });

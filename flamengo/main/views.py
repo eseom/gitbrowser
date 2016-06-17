@@ -78,7 +78,7 @@ def repos(group=None):
 
 
 @main.route(
-    '/commits/<string:group>/<string:repo>/<string:branch>/<int:take>/<int:skip>')
+    '/commits/<string:group>/<string:repo>/<path:branch>/<int:take>/<int:skip>')
 @util.login_required_restful
 def commits(group, repo, branch, take=10, skip=0):
     rp = util.get_repo(group, repo)
@@ -88,7 +88,8 @@ def commits(group, repo, branch, take=10, skip=0):
         committer=str(l.committer) + ' <' + l.committer.email + '>',
         committed_date=util.pretty_date(l.committed_date)
     ) for l in rp.iter_commits(branch, max_count=take, skip=skip)])
-    return jsonify(dict(result=True, commits=commits))
+    branches = [str(h) for h in rp.heads]
+    return jsonify(dict(result=True, commits=commits, branches=branches))
 
 
 @main.route('/tree/<string:group>/<string:repo>/<path:path>')

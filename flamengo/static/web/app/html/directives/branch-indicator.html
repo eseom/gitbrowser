@@ -18,6 +18,7 @@
     aria-labelledby="split-button">
     <li role="menuitem"
       ng-class="{active: b === currentBranch}"
-      ng-repeat="b in branches"><a href ui-sref="tree({path: b})">{{ b }}</a></li>
+      ng-repeat="b in branches"><a href ng-click="urlcallback(b)">{{ b }}</a>
+    </li>
   </ul>
 </div>
