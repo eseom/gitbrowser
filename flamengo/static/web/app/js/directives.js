@@ -2,7 +2,8 @@ define([
   'angular',
   './directives/show-during-resolve',
   './directives/initial-loading-resolve',
-  './directives/branch-indicator'
+  './directives/branch-indicator',
+  './directives/clone-indicator'
 ], function () {
   'use strict';
   /* new "directives" sub modules */
