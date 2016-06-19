@@ -3,18 +3,17 @@
   <div class="panel-header">
     <h4>commits</h4>
     <branch-indicator branches="branches"
-      currentbranch="stateParams.branch"
-      urlcallback="gotoAnotherBranch"
-      style="margin-bottom: 10px;"></branch-indicator>
+                      currentbranch="stateParams.branch"
+                      urlcallback="gotoAnotherBranch"
+                      style="margin-bottom: 10px;"></branch-indicator>
   </div>
 
   <div class="panel-body">
     <ul class="list-unstyled commit-horizontal-box">
       <li ng-repeat="c in list">
         <div class="">
-          <a class="hash-link"
-            href
-            ui-sref="commit({group: stateParams.group, repo: stateParams.repo, hexsha:c.hexsha})">{{ c.hexsha }}</a>
+          <a class="hash-link" href
+             ui-sref="commit({group: stateParams.group, repo: stateParams.repo, hexsha:c.hexsha})">{{ c.hexsha }}</a>
 
           <div class="meta">
             <span>{{ c.committed_date }}</span><br><strong>{{ c.committer }}</strong>
