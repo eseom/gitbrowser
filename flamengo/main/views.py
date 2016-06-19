@@ -1,18 +1,21 @@
 """
 main views
 """
-
+import base64
 import difflib
 from os import listdir, path as ospath
 
 import pygments
-from flask import Blueprint, current_app, jsonify, redirect, url_for
+from flask import Blueprint, current_app, jsonify, redirect, url_for, \
+    request, Response
 from flask.ext.login import current_user, login_required
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import guess_lexer_for_filename
 from pygments.lexers.special import TextLexer
+from . import git_http_backend
 from .. import util
+from ..models import User
 
 main = Blueprint('main', __name__, static_folder='../static')
 
@@ -228,3 +231,45 @@ def commit(group, repo, hexsha):
         diff_contents=diff_contents,
         parents=parents,
     ))
+
+
+def check_repo(e):
+    repo_dir = ospath.join(current_app.config['REPO_DIR'], 'repo')
+    environ = dict(request.environ)
+    p = environ['PATH_INFO'].strip('/').split('/')
+
+    try:
+        path = ospath.join(repo_dir, p[0], p[1])
+        if not ospath.exists(path):
+            return e
+    except IndexError:
+        # not repository path_info
+        return e
+
+    authentication = request.headers.get(
+        'Authorization', '').replace('Basic ', '')
+
+    if not authentication:
+        # @TODO classify browser request and git request more accurately
+        if request.headers.get('User-Agent', '').startswith('git'):  # git
+            return Response('', 401, {'WWW-Authenticate': 'Basic realm=""', })
+        else:  # browser
+            return redirect(url_for('main.app'))
+
+    authorization = base64.b64decode(authentication).decode('utf-8')
+    (username, password) = authorization.split(':', maxsplit=1)
+    username = username.strip()
+
+    user, authenticated = User.authenticate(username, password)
+    if not authenticated:
+        return Response('', 401)
+
+    (status_line, headers, response_body_generator) = \
+        git_http_backend.wsgi_to_git_http_backend(
+            environ, ospath.join(repo_dir))
+    response = Response(response_body_generator, status_line, headers)
+
+    if response.status_code == 404:  # Request not supported
+        # @TODO redirect with hash for angular
+        return redirect(url_for('main.app'))
+    return response

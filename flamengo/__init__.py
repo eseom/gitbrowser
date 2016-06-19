@@ -38,7 +38,11 @@ def create_app(env='dev'):
 def register_blueprint(app):
     # from wm10.api import api
     from .auth.views import auth
-    from .main.views import main
+    from .main.views import main, check_repo
 
     app.register_blueprint(main)
     app.register_blueprint(auth, url_prefix='/auth')
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return check_repo(e)
