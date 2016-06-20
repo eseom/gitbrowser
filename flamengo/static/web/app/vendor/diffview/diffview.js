@@ -48,8 +48,8 @@ diffview = {
         var baseTextLines = params.baseTextLines;
         var newTextLines = params.newTextLines;
         var opcodes = params.opcodes;
-        var baseTextName = params.baseTextName ? params.baseTextName : "Base Text";
-        var newTextName = params.newTextName ? params.newTextName : "New Text";
+        var baseTextName = params.baseTextName ? params.baseTextName : "(not exists)";
+        var newTextName = params.newTextName ? params.newTextName : "(not exists)";
         var contextSize = params.contextSize;
         var inline = (params.viewType == 0 || params.viewType == 1) ? params.viewType : 0;
 
