@@ -26,6 +26,8 @@ define([], function () {
             contextSize: 3
           }));
       });
+      $scope.truncated = commit.data.truncated;
+      $scope.countOfDiffs = commit.data.count_of_diffs;
       $scope.parents = commit.data.parents;
       $scope.hexsha = hexsha;
       $scope.commit = commit.data.commit;

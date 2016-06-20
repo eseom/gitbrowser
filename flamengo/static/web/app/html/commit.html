@@ -12,6 +12,10 @@
       <pre class="commit-message">{{ commit.message.trim() }}</pre>
     </div>
 
+    <div class="alert alert-warning" ng-if="truncated">
+      showing only 20 diffs of {{ countOfDiffs }}
+    </div>
+
     <table class="diff-header">
       <tr>
         <td class="left">

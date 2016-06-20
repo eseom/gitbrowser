@@ -199,6 +199,8 @@ def commit(group, repo, hexsha):
     # get diff
     diffs = commit.diff(parents[0])
     diff_contents = []
+    count = 0
+    truncated = False
     for diff in diffs:
         try:
             b_content = diff.b_blob.data_stream.read().decode('utf-8').split(
@@ -220,8 +222,14 @@ def commit(group, repo, hexsha):
         diff_contents.append(
             dict(baseTextLines=b_content, newTextLines=a_content,
                  opcodes=opcodes, baseTextName=b_path, newTextName=a_path))
+        count += 1
+        if count > 20:
+            truncated = True
+            break
 
     return jsonify(dict(
+        truncated=truncated,
+        count_of_diffs=len(diffs),
         commit=dict(
             message=commit.message,
             committer=str(
@@ -252,7 +260,7 @@ def check_repo(e):
     if not authentication:
         # @TODO classify browser request and git request more accurately
         if request.headers.get('User-Agent', '').startswith('git'):  # git
-            return Response('', 401, {'WWW-Authenticate': 'Basic realm=""', })
+            return Response('', 401, {'WWW-Authenticate': 'Basic realm=""',})
         else:  # browser
             return redirect(url_for('main.app'))
 
