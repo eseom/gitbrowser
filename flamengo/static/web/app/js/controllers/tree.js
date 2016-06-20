@@ -36,6 +36,7 @@ define([], function () {
       $scope.branch = tree.data.current_branch;
       $scope.list = [];
       $scope.commitCount = commitCount.data.count;
+      $scope.cloneUrl = 'http://localhost:5000/' + group + '/' + repo;
 
       /* */
       var first = [];
