@@ -18,7 +18,7 @@ Command details:
     celerybeat          Run a Celery Beat periodic task scheduler.
     celeryworker        Run a Celery worker process.
     admin               Run the admin applicatiln
-    db                  Run the admin applicatiln
+    db                  Run alembic functions
     shell               Starts a Python interactive shell with the Flask
                         application context
     create_all          Only create database tables if they don't exist and
@@ -31,7 +31,7 @@ Usage:
     manage.py celerybeat [-s FILE] [--pid=FILE] [-l DIR] [--config_prod]
     manage.py celeryworker [-n NUM] [-l DIR] [--config_prod]
     manage.py admin
-    manage.py db <command>
+    manage.py db <command> [--message]
     manage.py shell [--config_prod]
     manage.py create_all [--config_prod]
     manage.py (-h | --help)

@@ -22,15 +22,6 @@ def upgrade():
     sa.Column('email', sa.Unicode(length=256), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
-    op.create_table('builds',
-    sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('build_no', sa.Integer(), nullable=False),
-    sa.Column('commit_msg', sa.Unicode(length=256), nullable=False),
-    sa.Column('built_at', sa.DateTime(timezone=True), nullable=False),
-    sa.Column('result', sa.Boolean(), nullable=False),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('id')
-    )
     op.create_table('clients',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.Unicode(length=40), nullable=True),
@@ -97,6 +88,5 @@ def downgrade():
     op.drop_table('users')
     op.drop_index(op.f('ix_clients_client_secret'), table_name='clients')
     op.drop_table('clients')
-    op.drop_table('builds')
     op.drop_table('aliases')
     ### end Alembic commands ###
