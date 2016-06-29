@@ -23,7 +23,6 @@ class Tester(unittest.TestCase):
 
     def test_commit(self):
         take = 10
-        # repo = Repo(os.path.join(self.app.instance_path, 'nginx'))
         rv = self.test_client.get(
             url_for('main.commits', repo_path='nginx', take=take, skip=0))
         self.ae(rv.status_code, 200)
@@ -66,7 +65,8 @@ class Tester(unittest.TestCase):
 
     def test_commit(self):
         rv = self.test_client.get(
-            url_for('main.commit', repo_path='nginx', hexsha='ab8504b937cdbae734fb2d971fba4eea0b157f43'))
+            url_for('main.commit', repo_path='nginx',
+                    hexsha='ab8504b937cdbae734fb2d971fba4eea0b157f43'))
         self.ae(rv.status_code, 200)
         data = json.loads(rv.get_data(as_text=True))
         print(data)
