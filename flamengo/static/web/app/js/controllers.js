@@ -4,7 +4,9 @@ define([
   './controllers/commit',
   './controllers/commits',
   './controllers/dashboard',
-  './controllers/tree'
+  './controllers/tree',
+  './controllers/repos',
+  './controllers/modalInstance'
 ], function (angular) {
   'use strict';
   /* new "controllers" sub modules */
@@ -20,11 +22,13 @@ define([
       console.error('invalid controller spec');
       return;
     }
-    /* make resolve objects */
-    returnValue[controllerName.replace('Ctrl', '')] = {
-      url: a.url,
-      resolve: a.resolve
-    };
+    if (a.url) {
+      /* make resolve objects */
+      returnValue[controllerName.replace('Ctrl', '')] = {
+        url: a.url,
+        resolve: a.resolve
+      };
+    }
     /* register the controller */
     controllers.controller(controllerName, a.controller);
   }

@@ -3,8 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>flamengo</title>
-  <link rel="stylesheet"
-        href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link href='https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
 
@@ -35,8 +34,8 @@
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed"
-                data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-                aria-expanded="false">
+          data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
+          aria-expanded="false">
           <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
@@ -73,7 +72,19 @@
             show-during-resolve> Loading...</span></a></li>
           <li class="dropdown">
             <a href class="dropdown-toggle" data-toggle="dropdown"
-               role="button" aria-haspopup="true" aria-expanded="false">red@custdomain.com
+              role="button" aria-haspopup="true" aria-expanded="false">repository
+              <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <!--
+              <li><a href="/manage/repos">latest visited</a></li>
+              <li role="separator" class="divider"></li>
+              -->
+              <li><a href ui-sref="repos">my repositories</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href class="dropdown-toggle" data-toggle="dropdown"
+              role="button" aria-haspopup="true" aria-expanded="false">red@custdomain.com
               <span class="caret"></span></a>
             <ul class="dropdown-menu">
               <li><a href="/auth/signout">Sign out</a></li>
@@ -83,7 +94,7 @@
             <form class="navbar-form navbar-left top-search-form" role="search">
               <div class="form-group">
                 <input type="text" class="form-control input-sm"
-                       placeholder="Search">
+                  placeholder="Search">
               </div>
               <button type="submit" class="btn btn-default btn-sm">Submit</button>
             </form>
@@ -113,50 +124,55 @@
       <div class="container">
         <h4 class="header-title">
           <svg aria-hidden="true" class="octicon octicon-repo" height="16"
-               version="1.1" viewBox="0 0 12 16" width="12">
+            version="1.1" viewBox="0 0 12 16" width="12">
             <path
               d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"></path>
           </svg>
 
-          <div ng-if="!stateParams.group">
+          <span ng-if="title">{{ title }}</span>
+          <span ng-if="!title">
+
+          <span ng-if="!stateParams.group">
             <ul class="list-inline repo-navigation">
               <li>
                 any group or repository was not selected
               </li>
             </ul>
-          </div>
+          </span>
 
-          <div ng-if="stateParams.group && !stateParams.repo">
+          <span ng-if="stateParams.group && !stateParams.repo">
             <ul class="list-inline repo-navigation">
               <li>
                 repositories of {{ stateParams.group }}
               </li>
             </ul>
-          </div>
+          </span>
 
-          <div ng-if="stateParams.group && stateParams.repo">
+          <span ng-if="stateParams.group && stateParams.repo">
             <ul class="list-inline repo-navigation">
               <li>
                 <a href ui-sref="dashboard({group: stateParams.group})">{{ stateParams.group }}</a>
               </li>
               <li>/</li>
               <li>
-                <a href ui-sref="tree({group: stateParams.group, repo: stateParams.repo, path: 'master'})">{{ stateParams.repo }}</a>
+                <a href
+                  ui-sref="tree({group: stateParams.group, repo: stateParams.repo, path: 'master'})">{{ stateParams.repo }}</a>
               </li>
             </ul>
-          </div>
+          </span>
 
-          <!--
-          <a ng-if="stateParams.repo && stateParams.group"
-             href
-             ui-sref="commits({group: stateParams.group, repo: stateParams.repo, branch: 'master', take:15, skip:0})">
-            <svg aria-hidden="true" class="octicon octicon-repo commits" height="16"
-                 version="1.1" viewBox="0 0 12 16" width="12">
-              <path
-                d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"></path>
-            </svg>
-          </a>
-          -->
+            <!--
+            <a ng-if="stateParams.repo && stateParams.group"
+               href
+               ui-sref="commits({group: stateParams.group, repo: stateParams.repo, branch: 'master', take:15, skip:0})">
+              <svg aria-hidden="true" class="octicon octicon-repo commits" height="16"
+                   version="1.1" viewBox="0 0 12 16" width="12">
+                <path
+                  d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"></path>
+              </svg>
+            </a>
+            -->
+          </span>
         </h4>
       </div>
     </div>
@@ -167,7 +183,8 @@
   </div>
 
 </div>
-<script data-main="js/main" src="bower_components/requirejs/require.js"></script>
+<script data-main="js/main"
+  src="bower_components/requirejs/require.js"></script>
 
 </body>
 </html>

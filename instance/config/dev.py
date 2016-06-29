@@ -1,5 +1,5 @@
 DEBUG = True
-SECRET_KEY = 'flamengo dev secret key'
+SECRET_KEY = 'flamengo_dev_secret_key'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/flamengo.database'
 
@@ -11,4 +11,4 @@ CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 
 GIT_EXECUTABLE = '/usr/bin/git'
-REPO_DIR = './instance'
+REPO_DIR = './instance/repo'

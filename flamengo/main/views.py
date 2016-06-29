@@ -1,6 +1,7 @@
 """
 main views
 """
+
 import base64
 import difflib
 from os import listdir, path as ospath
@@ -69,7 +70,7 @@ def show_debug():
 @util.login_required_restful
 def repos(group=None):
     rpl = []
-    repo_dir = ospath.join(current_app.config['REPO_DIR'], 'repo')
+    repo_dir = current_app.config['REPO_DIR']
     if not group:
         for d in listdir(repo_dir):
             rpl.append(d)
@@ -107,7 +108,12 @@ def tree(group, repo, path=''):
     rp = util.get_repo(group, repo)
     # change head to the branch
     ref = util.select_branch(rp, path)
-    rp.head.ref = ref
+    try:
+        rp.head.ref = ref
+    except ValueError:  # select_branch return None
+        # default master
+        return jsonify(dict(list=[], current_branch='master', branches=['master']))
+
     path = path.replace(ref.name, '').strip('/')
     branch = ref.name
     tree = rp.tree()
@@ -145,8 +151,12 @@ def tree(group, repo, path=''):
 @util.login_required_restful
 def commit_count(group, repo, path):
     rp = util.get_repo(group, repo)
-    rp.head.ref = util.select_branch(rp, path)
-    return jsonify(dict(count=rp.commit().count()))
+    try:
+        rp.head.ref = util.select_branch(rp, path)
+        return jsonify(dict(count=rp.commit().count()))
+    except ValueError:  # select_branch return None
+        # default master
+        return jsonify(dict(count=0))
 
 
 @main.route('/blob/<string:group>/<string:repo>/<path:path>')
@@ -242,7 +252,7 @@ def commit(group, repo, hexsha):
 
 
 def check_repo(e):
-    repo_dir = ospath.join(current_app.config['REPO_DIR'], 'repo')
+    repo_dir = current_app.config['REPO_DIR']
     environ = dict(request.environ)
     p = environ['PATH_INFO'].strip('/').split('/')
 

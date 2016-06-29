@@ -125,6 +125,14 @@ pre.commit-message {
     margin: 0;
 }
 
+pre code {
+    padding: 0;
+    font-size: 90%;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 4px;
+}
+
 .code pre {
     font-size: 13px;
     font-family: 'Ubuntu Mono', monospace, Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";

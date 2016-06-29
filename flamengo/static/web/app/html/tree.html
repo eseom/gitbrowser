@@ -3,7 +3,9 @@
   <div class="panel-header">
     <h4>files</h4>
 
-    <div class="alert alert-info">
+    <div style="margin-top: 20px;" ng-if="commitCount === 0">
+    </div>
+    <div class="alert alert-info" ng-if="commitCount !== 0">
       <div>
         <a href
           ui-sref="commits({group: stateParams.group, repo: stateParams.repo, branch: branch, take:15, skip:0})">
@@ -24,7 +26,7 @@
   </div>
 
   <div class="panel-body">
-    <table class="table table-striped tree-table">
+    <table class="table table-striped tree-table" ng-if="list.length > 0">
       <thead>
       <tr>
         <th></th>
@@ -83,5 +85,28 @@
       </tr>
       </tbody>
     </table>
+
+    <div ng-if="list.length === 0" style="margin-top: 10px;">
+      <p style="margin-top: 20px;">
+        <strong>'master' does not have any commits yet.</strong>
+      </p>
+      <hr>
+      <p>
+        Work with your existing source code
+        <pre><code>$ git remote add origin {{ cloneUrl }}
+$ git push --all</code></pre>
+      </p>
+      <p>
+        or start a new project.
+        <pre><code>$ project='{{ stateParams.repo }}'
+$ git clone {{ cloneUrl }}
+$ cd $project
+$ echo \# $project &gt; README
+$ git add README
+$ git commit -m "first commit"
+$ git push origin master
+</code></pre>
+      </p>
+    </div>
   </div>
 </div>

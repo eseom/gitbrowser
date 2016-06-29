@@ -11,8 +11,10 @@ define([], function () {
         });
       }
     },
-    controller: function dashboardCtrl($scope, $stateParams, repos) {
+    controller: function dashboardCtrl($scope, $rootScope, $stateParams, repos) {
       var group = $stateParams.group;
+      console.log(12312)
+      $rootScope.title = 'dashboard';
       $scope.isGroups = group === '';
       $scope.repos = repos.data.repos;
     }

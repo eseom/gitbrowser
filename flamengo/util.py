@@ -70,7 +70,7 @@ def pretty_date(time=False):
 
 def get_repo(group, repo):
     return Repo(
-        ospath.join(current_app.config['REPO_DIR'], 'repo', group, repo))
+        ospath.join(current_app.config['REPO_DIR'], group, repo))
 
 
 def select_branch(rp, path):

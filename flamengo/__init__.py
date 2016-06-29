@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from flask.ext.cors import CORS
 from flask.ext.login import LoginManager
 from flask.ext.mail import Mail
@@ -12,7 +12,7 @@ def create_app(env='dev'):
     app = Flask(__name__, instance_relative_config=True)
     app.config['env'] = env
     if env == 'prod':
-        app.config.from_pyfile('/etc/aiji.kr/config.py', silent=True)
+        app.config.from_pyfile('/etc/flamengo/config.py', silent=True)
     else:
         app.config.from_pyfile('config/%s.py' % env, silent=True)
     CORS(app)
@@ -22,6 +22,10 @@ def create_app(env='dev'):
     login_manager.session_protection = 'strong'
     login_manager.login_view = 'auth.signin'
     login_manager.init_app(app)
+
+    @app.before_request
+    def before_request():
+        return
 
     @login_manager.user_loader
     def user_loader(user_id):
@@ -38,9 +42,11 @@ def create_app(env='dev'):
 def register_blueprint(app):
     # from wm10.api import api
     from .auth.views import auth
+    from .manage.views import manage
     from .main.views import main, check_repo
 
     app.register_blueprint(main)
+    app.register_blueprint(manage, url_prefix='/manage')
     app.register_blueprint(auth, url_prefix='/auth')
 
     @app.errorhandler(404)

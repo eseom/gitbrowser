@@ -1,6 +1,6 @@
 DEBUG = True
 SERVER_NAME = 'localhost'
-SECRET_KEY = 'flamengo dev secret key'
+SECRET_KEY = 'flamengo_dev_secret_key'
 SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
