@@ -8,9 +8,7 @@ require.config({
     'angular-bootstrap': '../bower_components/angular-bootstrap/ui-bootstrap-tpls',
     jquery: '../bower_components/jquery/dist/jquery',
     bootstrap: '../bower_components/bootstrap/dist/js/bootstrap',
-    diffview: '../vendor/diffview/diffview',
-
-    less: '../bower_components/less/dist/less',
+    diffview: '../vendor/diffview/diffview'
   },
   shim: {
     angular: {
