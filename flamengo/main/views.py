@@ -33,32 +33,32 @@ def index():
 @main.route('/app')
 @login_required
 def app():
-    return main.send_static_file('web/app/app.html')
+    return main.send_static_file('web/src/app.html')
 
 
 @main.route('/vendor/<path:path>')
 def vendor(path):
-    return main.send_static_file('web/app/vendor/%s' % path)
+    return main.send_static_file('web/src/vendor/%s' % path)
 
 
 @main.route('/bower_components/<path:path>')
 def bower_components(path):
-    return main.send_static_file('web/app/bower_components/%s' % path)
+    return main.send_static_file('web/src/bower_components/%s' % path)
 
 
 @main.route('/css/<path:path>')
 def css(path):
-    return main.send_static_file('web/app/css/%s' % path)
+    return main.send_static_file('web/src/css/%s' % path)
 
 
 @main.route('/js/<path:path>')
 def js(path):
-    return main.send_static_file('web/app/js/%s' % path)
+    return main.send_static_file('web/src/js/%s' % path)
 
 
 @main.route('/html/<path:path>')
 def html(path):
-    return main.send_static_file('web/app/html/%s' % path)
+    return main.send_static_file('web/src/html/%s' % path)
 
 
 @main.route('/show_debug')
