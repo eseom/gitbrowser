@@ -17,6 +17,7 @@ from pygments.lexers.special import TextLexer
 from . import git_http_backend
 from .. import util
 from ..models import User
+from git import exc
 
 main = Blueprint('main', __name__, static_folder='../static')
 
@@ -32,7 +33,7 @@ def index():
 @main.route('/app')
 @login_required
 def app():
-    return main.send_static_file('web/app/index.html')
+    return main.send_static_file('web/app/app.html')
 
 
 @main.route('/vendor/<path:path>')
@@ -86,12 +87,15 @@ def repos(group=None):
 @util.login_required_restful
 def commits(group, repo, branch, take=10, skip=0):
     rp = util.get_repo(group, repo)
-    commits = list([dict(
-        hexsha=l.hexsha,
-        message=l.message,
-        committer=str(l.committer) + ' <' + l.committer.email + '>',
-        committed_date=util.pretty_date(l.committed_date)
-    ) for l in rp.iter_commits(branch, max_count=take, skip=skip)])
+    try:
+        commits = list([dict(
+            hexsha=l.hexsha,
+            message=l.message,
+            committer=str(l.committer) + ' <' + l.committer.email + '>',
+            committed_date=util.pretty_date(l.committed_date)
+        ) for l in rp.iter_commits(branch, max_count=take, skip=skip)])
+    except exc.GitCommandError:  # no commits
+        commits = []
     branches = [str(h) for h in rp.heads]
     return jsonify(dict(result=True, commits=commits, branches=branches))
 

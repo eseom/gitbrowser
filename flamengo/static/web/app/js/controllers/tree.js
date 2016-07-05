@@ -33,6 +33,7 @@ define([], function () {
         repo = $stateParams.repo,
         path = $stateParams.path || '';
 
+      $rootScope.title = 'source browser';
       $scope.branch = tree.data.current_branch;
       $scope.list = [];
       $scope.commitCount = commitCount.data.count;
@@ -54,6 +55,18 @@ define([], function () {
       };
       $scope.gotoAnotherBranch = function (branch) {
         $state.go('tree', {group: group, repo: repo, path: branch})
+      }
+
+      $scope.message = {
+        existingProject: 'git remote add origin ' + $scope.cloneUrl + '\n\
+git push --all',
+        newProject: 'project=\'' + $stateParams.repo + '\'\n\
+git clone ' + $scope.cloneUrl + '\n\
+cd $project\n\
+echo \\# $project > README\n\
+git add README\n\
+git commit -m "first commit"\n\
+git push origin master'
       }
     }
   };

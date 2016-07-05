@@ -15,7 +15,13 @@ define([], function () {
         });
       }
     },
-    controller: function commitsCtrl($scope, $state, $stateParams, $http, commits) {
+    controller: function commitsCtrl($scope,
+                                     $rootScope,
+                                     $state,
+                                     $stateParams,
+                                     $http,
+                                     commits) {
+      $rootScope.title = 'commits';
       $scope.branches = commits.data.branches;
       $scope.list = commits.data.commits;
       $scope.gotoAnotherBranch = function (branch) {

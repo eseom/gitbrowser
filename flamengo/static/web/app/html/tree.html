@@ -1,21 +1,32 @@
 <div class="panel main-panel">
 
   <div class="panel-header">
-    <h4>files</h4>
-
-    <div style="margin-top: 20px;" ng-if="commitCount === 0">
+    <div ng-if="stateParams.group && stateParams.repo">
+      <ul class="list-inline subtitle">
+        <li>
+          <a href ui-sref="repository({group: stateParams.group})">{{ stateParams.group }}</a>
+        </li>
+        <li>/</li>
+        <li>
+          <a href
+             ui-sref="tree({group: stateParams.group, repo: stateParams.repo, path: 'master'})">{{ stateParams.repo }}</a>
+        </li>
+      </ul>
     </div>
-    <div class="alert alert-info" ng-if="commitCount !== 0">
+
+    <div style="margin-top: 20px;" ng-if="!commitCount">
+    </div>
+    <div class="alert alert-info" ng-if="commitCount">
       <div>
         <a href
-          ui-sref="commits({group: stateParams.group, repo: stateParams.repo, branch: branch, take:15, skip:0})">
+           ui-sref="commits({group: stateParams.group, repo: stateParams.repo, branch: branch, take:15, skip:0})">
           commit {{ commitCount | number }}</a>
       </div>
       <!-- <div><strong>/{{ stateParams.path }}</strong></div> -->
     </div>
 
     <clone-indicator cloneurl="cloneUrl"
-      class="pull-right"></clone-indicator>
+                     class="pull-right"></clone-indicator>
 
     <branch-indicator
       branches="branches"
@@ -26,11 +37,13 @@
   </div>
 
   <div class="panel-body">
-    <table class="table table-striped tree-table" ng-if="list.length > 0">
+
+
+    <table class="table tree-table" ng-if="list.length > 0">
       <thead>
       <tr>
         <th></th>
-        <th>file name</th>
+        <th>file</th>
         <th>message</th>
         <th></th>
       </tr>
@@ -41,15 +54,15 @@
           class="icon">
           <div ng-if="l.type === 'tree'">
             <svg aria-hidden="true" class="octicon octicon-file-directory"
-              height="16" version="1.1" viewBox="0 0 14 16" width="14">
+                 height="16" version="1.1" viewBox="0 0 14 16" width="14">
               <path
                 d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path>
             </svg>
           </div>
           <div ng-if="l.type === 'blob'">
             <svg aria-hidden="true" class="octicon octicon-file-text"
-              height="16"
-              version="1.1" viewBox="0 0 12 16" width="12">
+                 height="16"
+                 version="1.1" viewBox="0 0 12 16" width="12">
               <path
                 d="M6 5H2V4h4v1zM2 8h7V7H2v1zm0 2h7V9H2v1zm0 2h7v-1H2v1zm10-7.5V14c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1h7.5L12 4.5zM11 5L8 2H1v12h10V5z"></path>
             </svg>
@@ -58,14 +71,14 @@
         <td class="name">
           <a ng-if="l.type === 'system'" href ng-click="back()">{{ l.name }}</a>
           <a ng-if="l.type === 'tree'"
-            ui-sref="tree({
+             ui-sref="tree({
             group: stateParams.group,
             repo: stateParams.repo,
             branch: stateParams.branch,
             path: stateParams.path + (stateParams.path ? '/' : '') + l.name})">
             {{ l.name }}</a>
           <a ng-if="l.type === 'blob'"
-            ui-sref="blob({
+             ui-sref="blob({
             group: stateParams.group,
             repo: stateParams.repo,
             branch: stateParams.branch,
@@ -87,25 +100,17 @@
     </table>
 
     <div ng-if="list.length === 0" style="margin-top: 10px;">
-      <p style="margin-top: 20px;">
+      <p style="margin-top: 10px;">
         <strong>'master' does not have any commits yet.</strong>
       </p>
       <hr>
       <p>
         Work with your existing source code
-        <pre><code>$ git remote add origin {{ cloneUrl }}
-$ git push --all</code></pre>
+        <pre><code>{{ message.existingProject }}</code></pre>
       </p>
       <p>
         or start a new project.
-        <pre><code>$ project='{{ stateParams.repo }}'
-$ git clone {{ cloneUrl }}
-$ cd $project
-$ echo \# $project &gt; README
-$ git add README
-$ git commit -m "first commit"
-$ git push origin master
-</code></pre>
+        <pre><code>{{ message.newProject }}</code></pre>
       </p>
     </div>
   </div>

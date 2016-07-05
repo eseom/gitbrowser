@@ -7,19 +7,19 @@ define([], function () {
     })
   };
   return {
-    url: '/manage/repos',
+    url: '/manage/repository',
     resolve: {
       repos: function ($http) {
         return getRepos($http);
       }
     },
-    controller: function reposCtrl($scope,
-                                   $rootScope,
-                                   $state,
-                                   $http,
-                                   $uibModal,
-                                   $stateParams,
-                                   repos) {
+    controller: function manageRepositoryCtrl($scope,
+                                              $rootScope,
+                                              $state,
+                                              $http,
+                                              $uibModal,
+                                              $stateParams,
+                                              repos) {
       $rootScope.title = 'repositories management';
       var load = function (_repos) {
         $scope.groups = _repos.data.groups;
@@ -64,7 +64,9 @@ define([], function () {
                 current: repo
               }
             },
-            callback: function () { return reload; }
+            callback: function () {
+              return reload;
+            }
           }
         });
 

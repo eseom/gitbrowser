@@ -1,13 +1,12 @@
 <div class="panel main-panel">
   <div class="panel-header">
-    <h4>select a repository</h4>
   </div>
   <div class="panel-body">
     <h4 ng-if="isGroups">groups list</h4>
     <h4 ng-if="!isGroups">repository list of {{ stateParams.group }}</h4>
-    <ul style="font-size: 13px; margin-top: 20px;">
+    <ul class="list-unstyled" style="font-size: 13px; margin-top: 20px;">
       <li ng-if="isGroups" ng-repeat="r in repos" style="margin-bottom: 5px;">
-        <a href ui-sref="dashboard({group:r})">{{ r }}</a>
+        <a href ui-sref="repository({group:r})">{{ r }}</a>
       </li>
       <li ng-if="!isGroups" ng-repeat="r in repos" style="margin-bottom: 5px;">
         <a href ui-sref="tree({group:stateParams.group, repo:r, path: 'master'})">{{ r }}</a>

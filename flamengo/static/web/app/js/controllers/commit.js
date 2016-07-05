@@ -13,7 +13,14 @@ define([], function () {
         });
       }
     },
-    controller: function commitCtrl($scope, $state, $sce, $stateParams, $http, commit) {
+    controller: function commitCtrl($scope,
+                                    $rootScope,
+                                    $state,
+                                    $sce,
+                                    $stateParams,
+                                    $http,
+                                    commit) {
+      $rootScope.title = 'commit';
       var hexsha = $stateParams.hexsha || '';
       commit.data.diff_contents.forEach(function (data) {
         angular.element(document.getElementById('diffContents')).append(

@@ -3,7 +3,7 @@ define([
   'angular',
   'app',
   'routes',
-  'jquery', 'bootstrap', 'diffview'
+  'jquery', 'bootstrap', 'diffview', 'less'
 ], function (require, angular) {
   'use strict';
   angular.bootstrap(document, ['flamengo']);

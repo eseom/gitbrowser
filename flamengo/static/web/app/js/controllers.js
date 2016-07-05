@@ -3,10 +3,11 @@ define([
   './controllers/blob',
   './controllers/commit',
   './controllers/commits',
-  './controllers/dashboard',
+  './controllers/repository',
   './controllers/tree',
-  './controllers/repos',
-  './controllers/modalInstance'
+  './controllers/modalInstance',
+
+  './controllers/manage/repository'
 ], function (angular) {
   'use strict';
   /* new "controllers" sub modules */

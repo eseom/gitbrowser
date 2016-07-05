@@ -25,10 +25,11 @@ def manage_repos():
     repos = {}
     groups = []
 
-    user_alias = 'sample'
+    # username: nickname@domain.com
+    nickname = current_user.username.split('@')[0]
 
     # no own directory
-    repo_dir = ospath.join(current_app.config['REPO_DIR'], user_alias)
+    repo_dir = ospath.join(current_app.config['REPO_DIR'], nickname)
     if not ospath.exists(repo_dir):
         os.mkdir(repo_dir)
 
@@ -45,8 +46,8 @@ def manage_repos():
             repos[r.repo.group] = [r.repo.name]
 
     if not len(groups):
-        groups = [user_alias]
-        repos[user_alias] = []
+        groups = [nickname]
+        repos[nickname] = []
 
     return jsonify(dict(groups=groups, repos=repos))
 

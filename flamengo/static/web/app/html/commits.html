@@ -1,7 +1,6 @@
 <div class="panel main-panel">
 
   <div class="panel-header">
-    <h4>commits</h4>
     <branch-indicator branches="branches"
                       currentbranch="stateParams.branch"
                       urlcallback="gotoAnotherBranch"
@@ -10,6 +9,9 @@
 
   <div class="panel-body">
     <ul class="list-unstyled commit-horizontal-box">
+      <li ng-if="!list.length">
+        <strong>'master' does not have any commits yet.</strong>
+      </li>
       <li ng-repeat="c in list">
         <div class="">
           <a class="hash-link" href

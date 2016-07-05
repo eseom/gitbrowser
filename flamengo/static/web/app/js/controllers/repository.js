@@ -1,7 +1,7 @@
 define([], function () {
   'use strict';
   return {
-    url: '/dashboard/:group',
+    url: '/repository/:group',
     resolve: {
       repos: function ($http, $stateParams) {
         var group = $stateParams.group;
@@ -11,10 +11,9 @@ define([], function () {
         });
       }
     },
-    controller: function dashboardCtrl($scope, $rootScope, $stateParams, repos) {
+    controller: function repositoryCtrl($scope, $rootScope, $stateParams, repos) {
       var group = $stateParams.group;
-      console.log(12312)
-      $rootScope.title = 'dashboard';
+      $rootScope.title = 'repository';
       $scope.isGroups = group === '';
       $scope.repos = repos.data.repos;
     }
