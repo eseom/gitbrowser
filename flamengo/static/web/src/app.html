@@ -3,18 +3,18 @@
 <head>
   <meta charset="utf-8">
   <title>flamengo</title>
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link href='https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700' rel='stylesheet' type='text/css'>
   <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
 
-  <!-- build: css -->
+  <!-- build:css -->
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
   <link rel="stylesheet" href="vendor/diffview/diffview.css">
   <!-- endbuild -->
-  <!-- build: less -->
+  <!-- build:less -->
   <link rel="stylesheet/less" type="text/css" href="css/app.less"/>
   <!-- endbuild -->
-  <!-- build: lessjs -->
+  <!-- build:js -->
   <script src="bower_components/less/dist/less.js"></script>
   <!-- endbuild -->
 </head>
@@ -132,7 +132,9 @@
     </div>
   </div>
 </div>
+<!-- build:requirejs -->
 <script data-main="js/main"
         src="bower_components/requirejs/require.js"></script>
+<!-- endbuild -->
 </body>
 </html>

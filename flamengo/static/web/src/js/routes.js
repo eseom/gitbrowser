@@ -11,6 +11,6 @@ define(['./app', 'controllers'], function (app, controllers) {
         resolve: c.resolve
       })
     }
-    $urlRouterProvider.otherwise('/repository');
+    $urlRouterProvider.otherwise('/repository/');
   });
 });
