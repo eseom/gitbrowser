@@ -10,7 +10,8 @@ var gulp = require('gulp'),
   gif = require('gulp-if'),
   resources = require('gulp-resources'),
   del = require('del'),
-  runSequence = require('gulp-run-sequence');
+  runSequence = require('gulp-run-sequence'),
+  merge2 = require('merge2');
 
 gulp.task('scripts', function () {
 
@@ -41,7 +42,7 @@ gulp.task('replace', function () {
 
   var lessStream = gulp.src('./dist/temp/less.file').pipe(less()).pipe(concat('less-files.less'));
   var cssStream = gulp.src('./dist/temp/css.file').pipe(concat('css-files.css'));
-  merge(lessStream, cssStream)
+  merge2(cssStream, lessStream)
     .pipe(concat('style.css'))
     .pipe(minify())
     .pipe(gulp.dest('./dist/css/'));
