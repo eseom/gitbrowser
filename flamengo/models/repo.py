@@ -32,7 +32,7 @@ class Repo(db.Model):
 
 
 class RepoRole(db.Model):
-    __tablename__ = 'reporoles'
+    __tablename__ = 'repo_roles'
 
     id = sa_serial()
     repo_id = sa_integer(db.ForeignKey(Repo.id))
