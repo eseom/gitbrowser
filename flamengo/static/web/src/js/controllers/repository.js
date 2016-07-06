@@ -39,8 +39,6 @@ define([], function () {
         });
       }
 
-      console.log(repositoriesMap)
-
       $rootScope.title = 'repository';
       $scope.repos = repositories.data.repos;
 

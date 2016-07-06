@@ -27,7 +27,6 @@ define([], function () {
               description: $scope.new.description
             }
           }).then(function (response) {
-            console.log(callback)
             callback && callback();
             $uibModalInstance.close(response.data);
           });
