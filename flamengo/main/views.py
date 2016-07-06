@@ -10,6 +10,7 @@ import pygments
 from flask import Blueprint, current_app, jsonify, redirect, url_for, \
     request, Response
 from flask.ext.login import current_user, login_required
+from git import exc
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import guess_lexer_for_filename
@@ -17,7 +18,6 @@ from pygments.lexers.special import TextLexer
 from . import git_http_backend
 from .. import util
 from ..models import User
-from git import exc
 
 main = Blueprint('main', __name__, static_folder='../static')
 
@@ -116,7 +116,8 @@ def tree(group, repo, path=''):
         rp.head.ref = ref
     except ValueError:  # select_branch return None
         # default master
-        return jsonify(dict(list=[], current_branch='master', branches=['master']))
+        return jsonify(
+            dict(list=[], current_branch='master', branches=['master']))
 
     path = path.replace(ref.name, '').strip('/')
     branch = ref.name
@@ -211,6 +212,10 @@ def commit(group, repo, hexsha):
     parents = [str(p) for p in commit.parents]
 
     # get diff
+    # empty_tree=$(git hash-object -t tree /dev/null)
+    # git diff-tree -p ${empty_tree} $MY_COMMIT [${files}...]
+    if len(parents) == 0:
+        parents = ['4b825dc642cb6eb9a060e54bf8d69288fbee4904']
     diffs = commit.diff(parents[0])
     diff_contents = []
     count = 0

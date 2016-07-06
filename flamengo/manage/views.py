@@ -21,7 +21,7 @@ def check_listable(repo, user):
 
 @manage.route('/repos')
 @util.login_required_restful
-def manage_repos():
+def repos():
     repos = {}
     groups = []
 

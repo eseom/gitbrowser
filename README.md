@@ -20,3 +20,9 @@ open http://localhost:5000
 ## development environment
 * repo directory: {project_root}/instance/repo
 * repo database: /tmp/flamengo.database (sqlite3)
+
+## unittest
+
+```
+nosetests
+```
