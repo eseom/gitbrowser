@@ -23,8 +23,8 @@ class RepositoryTester(TestCase):
 
         # repositories 요청 dict 키 화인
         data = json.loads(rv.get_data(as_text=True))
-        self.assertListEqual(list(data['repos']['group1'][0].keys()),
-                             ['id', 'name', 'description'])
+        self.assertListEqual(sorted(list(data['repos']['group1'][0].keys())),
+                             sorted(['id', 'name', 'description']))
 
         # destroy
         rv = self.get_signed_client().delete(
