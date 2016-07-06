@@ -55,7 +55,7 @@ define([], function () {
       };
       $scope.gotoAnotherBranch = function (branch) {
         $state.go('tree', {group: group, repo: repo, path: branch})
-      }
+      };
 
       $scope.message = {
         existingProject: 'git remote add origin ' + $scope.cloneUrl + '\n\
@@ -63,8 +63,8 @@ git push --all',
         newProject: 'project=\'' + $stateParams.repo + '\'\n\
 git clone ' + $scope.cloneUrl + '\n\
 cd $project\n\
-echo \\# $project > README\n\
-git add README\n\
+echo \\# $project > README.md\n\
+git add README.md\n\
 git commit -m "first commit"\n\
 git push origin master'
       }

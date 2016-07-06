@@ -35,7 +35,10 @@ define([], function () {
       });
       $scope.truncated = commit.data.truncated;
       $scope.countOfDiffs = commit.data.count_of_diffs;
-      $scope.parents = commit.data.parents;
+      $scope.parents = commit.data.parents.filter(function (it) {
+        /* 4b825dc642cb6eb9a060e54bf8d69288fbee4904 is null commit hash */
+        return it !== '4b825dc642cb6eb9a060e54bf8d69288fbee4904';
+      });
       $scope.hexsha = hexsha;
       $scope.commit = commit.data.commit;
     }

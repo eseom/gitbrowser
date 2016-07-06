@@ -45,7 +45,7 @@ table.diff tbody td {
 }
 
 table.diff .empty {
-    background-color: #EFEFEF;
+    background-color: #fafafa;
 }
 
 table.diff .replace {
