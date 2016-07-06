@@ -1,16 +1,31 @@
 <div class="panel main-panel">
   <div class="panel-header">
+    <div class="pull-right">
+      <button type="button" class="btn btn-xs btn-default"
+              ng-click="create()">create
+      </button>
+    </div>
+    <h4>&nbsp;</h4>
   </div>
   <div class="panel-body">
-    <h4 ng-if="isGroups">groups list</h4>
-    <h4 ng-if="!isGroups">repository list of {{ stateParams.group }}</h4>
-    <ul class="list-unstyled" style="font-size: 13px; margin-top: 20px;">
-      <li ng-if="isGroups" ng-repeat="r in repos" style="margin-bottom: 5px;">
-        <a href ui-sref="repository({group:r})">{{ r }}</a>
-      </li>
-      <li ng-if="!isGroups" ng-repeat="r in repos" style="margin-bottom: 5px;">
-        <a href ui-sref="tree({group:stateParams.group, repo:r, path: 'master'})">{{ r }}</a>
-      </li>
-    </ul>
+    <div ng-repeat="g in groups">
+      <h4>{{ g }}</h4>
+      <ul style="font-size: 14px;">
+        <li ng-repeat="r in repos[g]" style="margin-bottom: 5px;">
+          <ul class="list-inline" style="margin-top: 20px;">
+            <li>
+              <a href ui-sref="trees({group:g, repo:r.name, path: 'master'})">{{ r.name }}</a>
+            </li>
+            <li>
+              <button class="btn btn-xs btn-default" type="button" ng-click="edit(r.id)">edit</button>
+              <button class="btn btn-xs btn-danger" type="button" ng-click="delete(r.id)">delete</button>
+            </li>
+          </ul>
+        </li>
+        <li ng-if="repos[g].length === 0">
+          no repositories, <a href ng-click="create()">create new!</a>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>

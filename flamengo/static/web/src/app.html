@@ -38,8 +38,7 @@
     <a href style="font-size: 16px;">Flamengo</a>
   </div>
   <div class="right">
-    <span style="color: white; margin-right: 10px;" show-during-resolve> Loading...</span>
-    <a href><i class="fa fa-user"></i></a>
+        <span style="color: white; margin-right: 10px;" show-during-resolve> Loading...</span>
   </div>
   <div class="clear"></div>
 </header>
@@ -60,9 +59,10 @@
             <i class="fa fa-dashboard"></i> control
           </div>
           <ul class="nav nav-pills nav-stacked">
-            <li><a href ui-sref="repository()"> repository </a></li>
+            <li><a href ui-sref="repository"> repository </a></li>
           </ul>
         </div>
+
         <div class="section" ng-if="stateParams.group && stateParams.repo">
           <div class="title" style="font-weight: bold">
             <i class="fa fa-code"></i> source
@@ -70,10 +70,25 @@
 
           <ul class="nav nav-pills nav-stacked">
             <li>
-              <a href ui-sref="tree({group: stateParams.group, repo: stateParams.repo, path: stateParams.branch || 'master'})"> source tree </a>
+              <a href ui-sref="trees({group: stateParams.group, repo: stateParams.repo, path: stateParams.branch || 'master'})"> source browser </a>
             </li>
             <li>
               <a href ui-sref="commits({group: stateParams.group, repo: stateParams.repo, branch: stateParams.branch || 'master', take:15, skip:0})"> commits </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="section">
+          <div class="title" style="font-weight: bold">
+            <i class="fa fa-user"></i> user
+          </div>
+
+          <ul class="nav nav-pills nav-stacked">
+            <li>
+              <a href ui-sref="profile"> profile </a>
+            </li>
+            <li>
+              <a href="/auth/signout"> sign out </a>
             </li>
           </ul>
         </div>
@@ -87,7 +102,7 @@
               <div class="stripe stripe-blue">
                 <h4 class="title" style="margin-left: 10px;">
                   <svg aria-hidden="true" class="octicon octicon-repo" height="16"
-                       version="1.1" viewBox="0 0 12 16" width="12">
+                    version="1.1" viewBox="0 0 12 16" width="12">
                     <path
                       d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"></path>
                   </svg>
@@ -115,7 +130,7 @@
                           <li>/</li>
                           <li>
                             <a href
-                               ui-sref="tree({group: stateParams.group, repo: stateParams.repo, path: 'master'})">{{ stateParams.repo }}</a>
+                              ui-sref="tree({group: stateParams.group, repo: stateParams.repo, path: 'master'})">{{ stateParams.repo }}</a>
                           </li>
                         </ul>
                       </span>
@@ -134,7 +149,7 @@
 </div>
 <!-- build:requirejs -->
 <script data-main="js/main"
-        src="bower_components/requirejs/require.js"></script>
+  src="bower_components/requirejs/require.js"></script>
 <!-- endbuild -->
 </body>
 </html>

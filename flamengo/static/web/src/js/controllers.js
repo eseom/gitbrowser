@@ -4,10 +4,10 @@ define([
   './controllers/commit',
   './controllers/commits',
   './controllers/repository',
-  './controllers/tree',
-  './controllers/modalInstance',
+  './controllers/trees',
+  './controllers/profile',
 
-  './controllers/manage/repository'
+  './controllers/repository/edit'
 ], function (angular) {
   'use strict';
   /* new "controllers" sub modules */

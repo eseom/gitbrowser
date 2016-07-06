@@ -8,7 +8,7 @@ define([], function () {
           repo = $stateParams.repo,
           hexsha = $stateParams.hexsha;
         return $http({
-          url: '/commit/' + group + '/' + repo + '/' + hexsha,
+          url: '/repositories/commit/' + group + '/' + repo + '/' + hexsha,
           method: 'GET'
         });
       }

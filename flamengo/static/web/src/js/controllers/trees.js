@@ -1,14 +1,14 @@
 define([], function () {
   'use strict';
   return {
-    url: '/tree/:group/:repo/{path:any}',
+    url: '/trees/:group/:repo/{path:any}',
     resolve: {
-      tree: function ($http, $stateParams) {
+      trees: function ($http, $stateParams) {
         var group = $stateParams.group,
           repo = $stateParams.repo,
           path = $stateParams.path || '';
         return $http({
-          url: '/tree/' + group + '/' + repo + '/' + path,
+          url: '/repositories/trees/' + group + '/' + repo + '/' + path,
           method: 'GET'
         });
       },
@@ -17,24 +17,24 @@ define([], function () {
           repo = $stateParams.repo,
           path = $stateParams.path || '';
         return $http({
-          url: '/commit/count/' + group + '/' + repo + '/' + path,
+          url: '/repositories/commit/count/' + group + '/' + repo + '/' + path,
           method: 'GET'
         });
       }
     },
-    controller: function treeCtrl($scope,
+    controller: function treesCtrl($scope,
                                   $rootScope,
                                   $state,
                                   $stateParams,
                                   $http,
-                                  tree,
+                                  trees,
                                   commitCount) {
       var group = $stateParams.group,
         repo = $stateParams.repo,
         path = $stateParams.path || '';
 
       $rootScope.title = 'source browser';
-      $scope.branch = tree.data.current_branch;
+      $scope.branch = trees.data.current_branch;
       $scope.list = [];
       $scope.commitCount = commitCount.data.count;
       $scope.cloneUrl = 'http://localhost:5000/' + group + '/' + repo;
@@ -43,18 +43,18 @@ define([], function () {
       var first = [];
       if (path !== $scope.branch)
         first = [{type: 'system', name: '(parent directory)'}];
-      var list = first.concat(tree.data.list);
+      var list = first.concat(trees.data.list);
 
       $scope.list = list;
-      $scope.branches = tree.data.branches;
+      $scope.branches = trees.data.branches;
 
       $scope.back = function () {
         var p = path.split('/');
         var url = p.slice(0, p.length - 1).join('/');
-        $state.go('tree', {group: group, repo: repo, path: url})
+        $state.go('trees', {group: group, repo: repo, path: url})
       };
       $scope.gotoAnotherBranch = function (branch) {
-        $state.go('tree', {group: group, repo: repo, path: branch})
+        $state.go('trees', {group: group, repo: repo, path: branch})
       };
 
       $scope.message = {

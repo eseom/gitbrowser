@@ -9,21 +9,22 @@
         <li>/</li>
         <li>
           <a href
-             ui-sref="tree({group: stateParams.group, repo: stateParams.repo, path: 'master'})">{{ stateParams.repo }}</a>
+             ui-sref="trees({group: stateParams.group, repo: stateParams.repo, path: 'master'})">{{ stateParams.repo }}</a>
         </li>
       </ul>
     </div>
 
-    <div style="margin-top: 20px;" ng-if="!commitCount">
-    </div>
     <div class="alert alert-info" ng-if="commitCount">
       <div>
         <a href
            ui-sref="commits({group: stateParams.group, repo: stateParams.repo, branch: branch, take:15, skip:0})">
           commit {{ commitCount | number }}</a>
       </div>
-      <!-- <div><strong>/{{ stateParams.path }}</strong></div> -->
     </div>
+
+  </div>
+
+  <div class="panel-body">
 
     <clone-indicator cloneurl="cloneUrl"
                      class="pull-right"></clone-indicator>
@@ -33,10 +34,6 @@
       currentbranch="branch"
       urlcallback="gotoAnotherBranch"
       style="margin-bottom: 10px;"></branch-indicator>
-
-  </div>
-
-  <div class="panel-body">
 
 
     <table class="table tree-table" ng-if="list.length > 0">
@@ -69,15 +66,15 @@
           </div>
         </td>
         <td class="name">
-          <a ng-if="l.type === 'system'" href ng-click="back()">{{ l.name }}</a>
-          <a ng-if="l.type === 'tree'"
-             ui-sref="tree({
+          <a href ng-if="l.type === 'system'" ng-click="back()">{{ l.name }}</a>
+          <a href ng-if="l.type === 'tree'"
+             ui-sref="trees({
             group: stateParams.group,
             repo: stateParams.repo,
             branch: stateParams.branch,
             path: stateParams.path + (stateParams.path ? '/' : '') + l.name})">
             {{ l.name }}</a>
-          <a ng-if="l.type === 'blob'"
+          <a href ng-if="l.type === 'blob'"
              ui-sref="blob({
             group: stateParams.group,
             repo: stateParams.repo,

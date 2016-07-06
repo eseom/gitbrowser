@@ -8,7 +8,7 @@ define([], function () {
           repo = $stateParams.repo,
           path = $stateParams.path || '';
         return $http({
-          url: '/blob/' + group + '/' + repo + '/' + path,
+          url: '/repositories/blob/' + group + '/' + repo + '/' + path,
           method: 'GET'
         });
       }

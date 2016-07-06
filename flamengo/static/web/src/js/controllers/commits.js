@@ -10,7 +10,9 @@ define([], function () {
           take = $stateParams.take,
           skip = $stateParams.skip;
         return $http({
-          url: '/commits/' + group + '/' + repo + '/' + branch + '/' + take + '/' + skip,
+          url: [
+            '/repositories/commits', group, repo, branch, take, skip
+          ].join('/'),
           method: 'GET'
         });
       }

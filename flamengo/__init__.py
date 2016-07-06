@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask
 from flask.ext.cors import CORS
 from flask.ext.login import LoginManager
 from flask.ext.mail import Mail
@@ -42,13 +42,13 @@ def create_app(env='dev'):
 def register_blueprint(app):
     # from wm10.api import api
     from .auth.views import auth
-    from .manage.views import manage
-    from .main.views import main, check_repo
+    from .repository.views import repository
+    from .main.views import main, serve_repository
 
     app.register_blueprint(main)
-    app.register_blueprint(manage, url_prefix='/manage')
+    app.register_blueprint(repository, url_prefix='/repositories')
     app.register_blueprint(auth, url_prefix='/auth')
 
     @app.errorhandler(404)
     def page_not_found(e):
-        return check_repo(e)
+        return serve_repository(e)
