@@ -1,6 +1,8 @@
-# flamengo
+# Flamengo
 
 Flamengo is a flask and angular based web project like Github.
+
+[![Build Status](https://travis-ci.org/eseom/flamengo.svg)](https://travis-ci.org/facebook/buck)
 
 ## requirements
 
