@@ -1,8 +1,10 @@
 import hashlib
+import json
 import logging
 import time
 
-from flask import render_template, redirect, request, url_for, Blueprint, flash
+from flask import render_template, redirect, request, url_for, Blueprint, \
+    flash, jsonify
 from flask.ext.mail import Message
 from flask_login import login_user, logout_user, current_user
 from .forms import LoginForm, JoinForm
@@ -21,16 +23,35 @@ def set_app(setup_state):
     mail = app.extensions['mail']
 
 
+@auth.route('/me', methods=['GET', 'POST'])
+def me():
+    return jsonify(dict(result=True, user=current_user.to_dict()))
+
+
+@auth.route('/save', methods=['POST'])
+def save():
+    form = json.loads(request.data.decode('utf-8'))
+    id = form.get('id')
+    user = User.query.get(id)
+    user.name = form.get('name')
+    user.nickname = form.get('nickname')
+
+    if form.get('password', '') != '':
+        user.password = form.get('password')
+
+    db.session.add(user)
+    db.session.commit()
+
+    return jsonify(dict(result=True))
+
+
 @auth.route('/signin', methods=['GET', 'POST'])
 def signin():
     if current_user.is_authenticated:
         return redirect(url_for('main.app'))
     form = LoginForm(request.form)
     error = None
-    if request.method == 'POST':  # and form.validate():
-        # return redirect(request.args.get("next") or url_for("main.app"))
-        # username = form.username.data.lower().strip()
-        # password = form.password.data
+    if request.method == 'POST':
         username = request.form.get('email')
         password = request.form.get('password')
 
@@ -107,7 +128,6 @@ def signup_confirm():
     user = User.query.filter(User.validation_code == code).first()
     if request.method == 'POST':
         user.password = request.form.get('password1')
-        user.name = request.form.get('name')
         user.validation_code = ''
         db.session.add(user)
         db.session.commit()
