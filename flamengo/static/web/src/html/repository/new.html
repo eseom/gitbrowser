@@ -1,0 +1,30 @@
+<section>
+  <div class="modal-header">
+    <h3 class="modal-title">new repository</h3>
+  </div>
+  <div class="modal-body">
+    <form>
+      <fieldset class="form-group">
+        <label for="group">Group</label>
+        <select class="form-control" id="group" ng-model="new.group">
+          <option value="">select a group</option>
+          <option ng-repeat="ag in availableGroups">{{ ag }}</option>
+        </select>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="name">repository name</label>
+        <input type="text" class="form-control" id="name" ng-model="new.name" placeholder="repository">
+        <small class="text-muted">{{ liveurl }}</small>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="description">description</label>
+        <textarea class="form-control" ng-model="new.description" id="description" rows="3"></textarea>
+      </fieldset>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary btn-sm" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-warning btn-sm" type="button" ng-click="cancel()">Cancel
+    </button>
+  </div>
+</section>

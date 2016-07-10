@@ -7,6 +7,7 @@ define([
   './controllers/trees',
   './controllers/profile',
 
+  './controllers/repository/new',
   './controllers/repository/edit'
 ], function (angular) {
   'use strict';
