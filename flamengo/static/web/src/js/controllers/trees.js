@@ -23,12 +23,12 @@ define([], function () {
       }
     },
     controller: function treesCtrl($scope,
-                                  $rootScope,
-                                  $state,
-                                  $stateParams,
-                                  $http,
-                                  trees,
-                                  commitCount) {
+                                   $rootScope,
+                                   $state,
+                                   $stateParams,
+                                   $http,
+                                   trees,
+                                   commitCount) {
       var group = $stateParams.group,
         repo = $stateParams.repo,
         path = $stateParams.path || '';
@@ -38,6 +38,7 @@ define([], function () {
       $scope.list = [];
       $scope.commitCount = commitCount.data.count;
       $scope.cloneUrl = 'http://localhost:5000/' + group + '/' + repo;
+      $scope.paths = path.split('/').slice(1);
 
       /* */
       var first = [];

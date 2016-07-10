@@ -11,14 +11,16 @@
           <a href
              ui-sref="trees({group: stateParams.group, repo: stateParams.repo, path: 'master'})">{{ stateParams.repo }}</a>
         </li>
+
+        <li ng-repeat-start="p in paths">/</li>
+        <li ng-repeat-end>{{ p }}</li>
       </ul>
     </div>
 
     <div class="alert alert-info" ng-if="commitCount">
       <div>
-        <a href
-           ui-sref="commits({group: stateParams.group, repo: stateParams.repo, branch: branch, take:15, skip:0})">
-          commit {{ commitCount | number }}</a>
+        <a href ui-sref="commits({group: stateParams.group, repo: stateParams.repo, branch: branch, take:15, skip:0})">
+          {{ commitCount | number }} commit<span ng-if="commitCount > 1">s</span></a>
       </div>
     </div>
 
