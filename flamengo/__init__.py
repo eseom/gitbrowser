@@ -40,7 +40,6 @@ def create_app(env='dev'):
 
 
 def register_blueprint(app):
-    # from wm10.api import api
     from .auth.views import auth
     from .repository.views import repository
     from .main.views import main, serve_repository

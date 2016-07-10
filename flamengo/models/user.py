@@ -1,8 +1,10 @@
 import base64
 import hashlib
+from datetime import datetime
 
+from sqlalchemy import event
 from sqlalchemy.orm import relationship, synonym
-from .base import db, sa_unicode
+from .base import db, sa_unicode, sa_serial, sa_boolean, sa_datetime
 
 
 def _get_encrypted_password(password):
@@ -14,17 +16,15 @@ def _get_encrypted_password(password):
 class User(db.Model):
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True, unique=True)
-
-    username = db.Column(db.Unicode(256), unique=True, nullable=False)
-    name = db.Column(db.Unicode(256))
-    _password = db.Column('password', db.Unicode(256))
-    _is_active = db.Column('is_active', db.Boolean, nullable=False,
-                           default=False)
-    tel1 = sa_unicode(length=256, default='')
-    tel2 = sa_unicode(length=256, default='')
-    created_at = db.Column(db.DateTime)
-    validation_code = sa_unicode(length=256)
+    id = sa_serial()
+    username = sa_unicode(255)
+    nickname = sa_unicode(255, default='')
+    name = sa_unicode(255, default='')
+    _password = sa_unicode(255, default='')
+    _is_active = sa_boolean(default=False)
+    created_at = sa_datetime()
+    updated_at = sa_datetime()
+    validation_code = sa_unicode(255)
 
     def _get_password(self):
         return self._password
@@ -60,13 +60,28 @@ class User(db.Model):
         return dict(
             id=self.id,
             username=self.username,
+            nickname=self.nickname,
             name=self.name,
             created_at=self.created_at,
             is_active=self._is_active,
         )
 
     def __repr__(self):
-        return '<User: %s>' % (self.username)
+        return '<User: %s>' % (self.username,)
+
+
+def insert_inserted_listener(mapper, connection, target):
+    target.created_at = datetime.now()
+
+
+def update_updated_listener(mapper, connection, target):
+    target.updated_at = datetime.now()
+
+
+event.listen(User, 'before_insert', insert_inserted_listener,
+             propagate=True)
+event.listen(User, 'before_update', update_updated_listener,
+             propagate=True)
 
 
 class Alias(db.Model):

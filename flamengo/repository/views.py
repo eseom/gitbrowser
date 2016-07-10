@@ -65,21 +65,21 @@ def index():
 @repository.route('', methods=['POST'])
 @util.login_required_restful
 def create():
-    data = json.loads(request.data.decode('utf-8'))
+    form = json.loads(request.data.decode('utf-8'))
 
     # temporary
-    data['type'] = 'public'
+    form['type'] = 'public'
 
     # repo dir
     GitRepo.init(ospath.join(
-        current_app.config['REPO_DIR'], data['group'], data['name']), bare=True)
+        current_app.config['REPO_DIR'], form['group'], form['name']), bare=True)
 
     # repo model
     repo = Repo(
-        group=data['group'],
-        name=data['name'],
-        type=data['type'],
-        description=data['description'],
+        group=form['group'],
+        name=form['name'],
+        type=form['type'],
+        description=form.get('description', ''),
         repo_roles=[
             RepoRole(user_id=current_user.id)
         ]
