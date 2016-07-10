@@ -23,21 +23,7 @@ define([], function () {
                                         $uibModal,
                                         $stateParams,
                                         repositories) {
-      /**
-       * remap repositories list
-       * @type {{}}
-       */
       var repositoriesMap = {};
-      for (var key in repositories.data.repos) {
-        var array = repositories.data.repos[key];
-        array.map(function (it) {
-          repositoriesMap[it.id] = {
-            group: key,
-            name: it.name,
-            description: it.description
-          }
-        });
-      }
 
       $rootScope.title = 'repository';
       $scope.repos = repositories.data.repos;
@@ -45,6 +31,20 @@ define([], function () {
       var load = function (_repos) {
         $scope.groups = _repos.data.groups;
         $scope.repos = _repos.data.repos;
+        /**
+         * remap repositories list
+         * @type {{}}
+         */
+        for (var key in _repos.data.repos) {
+          var array = _repos.data.repos[key];
+          array.map(function (it) {
+            repositoriesMap[it.id] = {
+              group: key,
+              name: it.name,
+              description: it.description
+            }
+          });
+        }
       };
       var reload = function () {
         getRepositories($http).then(load);
@@ -52,12 +52,12 @@ define([], function () {
       load(repositories);
 
       $scope.create = function () {
-        $scope.open('sm');
+        $scope.openNewModal('sm');
       };
 
       $scope.edit = function (id) {
         var r = repositoriesMap[id];
-        $scope.open('sm', {
+        $scope.openEditModal('sm', {
           id: id,
           group: r.group,
           name: r.name,
@@ -74,11 +74,35 @@ define([], function () {
         })
       };
 
-      $scope.open = function (size, current) {
+      $scope.openNewModal = function (size, current) {
         var modalInstance = $uibModal.open({
           animation: true,
-          templateUrl: 'html/repository/edit.html',
-          controller: 'repositoryEditCtrl',
+          templateUrl: 'html/repository/new.html',
+          controller: 'repositoryNewCtrl',
+          size: size,
+          resolve: {
+            repos: function () {
+              return {
+                groups: repositories.data.groups,
+                current: current
+              }
+            },
+            callback: function () {
+              return reload;
+            }
+          }
+        });
+
+        modalInstance.result.then(function () {
+        }, function () {
+          // $log.info('dismiss');
+        });
+      };
+      $scope.openEditModal = function (size, current) {
+        var modalInstance = $uibModal.open({
+          animation: true,
+          templateUrl: 'html/repository/new.html',
+          controller: 'repositoryNewCtrl',
           size: size,
           resolve: {
             repos: function () {
