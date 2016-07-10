@@ -46,6 +46,12 @@ define([
     $rootScope.$on('$stateChangeSuccess', function () {
       $rootScope.stateParams = $stateParams;
     });
+    $rootScope.$on('$stateChangeError', function (e, toState, toParams, fromState, fromParams, error) {
+      if (fromState.name === '') {
+        e.preventDefault();
+        return false;
+      }
+    });
   });
   return app;
 });
