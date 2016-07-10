@@ -4,9 +4,75 @@
   </div>
 
   <div class="panel-body">
-    <h4>user profile</h4>
+    <h4>Your profile</h4>
+
     <div>
-      body
+      <form class="two_column totango tracked" data-tracking-activity="Personalize Zendesk" data-tracking-module="Save Settings" enctype="multipart/form-data" id="settings-account-branding" method="post">
+        <div style="margin:0;padding:0;display:inline">
+          <input name="utf8" type="hidden" value="✓"><input name="_method" type="hidden" value="put"><input name="authenticity_token" type="hidden" value="00o6uJfC44mt3haT+St4wK76qZLeSzy9FORL4oCOrxk=">
+        </div>
+
+        <div class="element_group">
+
+          <div class="form_element">
+            <label for="account_name">username</label>
+
+            <div class="form_field">
+              {{ user.username }}
+            </div>
+          </div>
+          <div class="form_element">
+            <label for="account_name">Name</label>
+
+            <div class="form_field">
+              <input class="title"
+                     ng-model="user.name"
+                     size="30" type="text">
+            </div>
+          </div>
+
+          <div class="form_element">
+
+            <label for="account_name">Nickname</label>
+
+            <div class="form_field">
+              <input class="title" id="account_name"
+                     ng-model="user.nickname"
+                     size="30" type="text">
+
+              <p><small>
+                This nickname is used for the group name of your own repositories.<br>
+                ex) http://localhost:5000/{{ nickname }}/&lt;project name&gt;</small>
+              </p>
+            </div>
+          </div>
+
+          <div class="form_element">
+            <label for="password">Password</label>
+
+            <div class="form_field">
+              <p>
+                <input class="title" id="password"
+                       size="30" type="password"
+                       ng-model="user.password">
+              </p>
+
+              <p>
+                <input class="title"
+                       size="30" type="password"
+                       ng-model="user.passwordConfirm">
+              </p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-sm btn-default"
+                  name="commit" type="button" ng-click="save()">Save
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
