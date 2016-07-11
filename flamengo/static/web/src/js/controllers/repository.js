@@ -13,6 +13,10 @@ define([], function () {
         return $http({
           url: '/repositories',
           method: 'GET'
+        }).then(function (response) {
+          return response
+        }, function (response) {
+          return response
         });
       }
     },
@@ -23,6 +27,13 @@ define([], function () {
                                         $uibModal,
                                         $stateParams,
                                         repositories) {
+      /* no available nickname */
+      if (repositories.status === 301) {
+        $rootScope.flashError('A nickname must be set before making a repository.');
+        $state.go('profile');
+        return false;
+      }
+
       var repositoriesMap = {};
 
       $rootScope.title = 'repository';

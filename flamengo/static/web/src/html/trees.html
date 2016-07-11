@@ -37,7 +37,7 @@
 
   <div class="panel-body">
 
-    <div>
+    <div ng-if="lastCommit">
       <p class="pull-right">
         <img src="/profile/image/{{ lastCommit.committer }}" style="max-width: 20px; vertical-align: top">
         {{ lastCommit.committer }}

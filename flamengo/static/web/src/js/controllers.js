@@ -27,6 +27,7 @@ define([
     if (a.url) {
       /* make resolve objects */
       returnValue[controllerName.replace('Ctrl', '')] = {
+        name: a.name,
         url: a.url,
         resolve: a.resolve
       };

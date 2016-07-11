@@ -24,6 +24,20 @@ define([
      * http interceptor
      */
     $httpProvider.interceptors.push(['$rootScope', '$q', function ($rootScope, $q) {
+      $rootScope.flashMessage = function (text) {
+        $rootScope.flash.error = '';
+        $rootScope.flash.message = text;
+      };
+      $rootScope.flashError = function (text) {
+        $rootScope.flash.message = '';
+        $rootScope.flash.error = text;
+      };
+      /** flash message */
+      $rootScope.flash = {
+        message: '',
+        error: ''
+      };
+
       return {
         responseError: function (rejection) {
           /**
@@ -44,6 +58,13 @@ define([
      * global event
      */
     $rootScope.$on('$stateChangeSuccess', function () {
+      /** flash message */
+      $rootScope.flash = {
+        message: '',
+        error: ''
+      };
+
+      /** stateParams */
       $rootScope.stateParams = $stateParams;
     });
     $rootScope.$on('$stateChangeError', function (e, toState, toParams, fromState, fromParams, error) {

@@ -5,7 +5,22 @@ from tests.base import TestCase
 
 
 class RepositoryTester(TestCase):
+    def test_repository_index_initialize(self):
+        rv = self.get_signed_client().get(url_for('repository.index'))
+        self.ae(rv.status_code, 301)
+
     def test_create_delete_repository(self):
+        # set user nickname
+        rv = self.get_signed_client().put(
+            url_for('auth.save'),
+            data=json.dumps(dict(
+                id=1,
+                nickname='group1',
+                name='name1'
+            ))
+        )
+        self.ae(rv.status_code, 200)
+
         # create
         rv = self.get_signed_client().post(
             url_for('repository.create'),

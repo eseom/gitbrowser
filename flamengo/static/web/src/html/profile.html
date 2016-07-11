@@ -40,14 +40,21 @@
             <label for="account_name">Nickname</label>
 
             <div class="form_field">
-              <input class="title" id="account_name"
-                     ng-model="user.nickname"
-                     size="30" type="text">
+              <div ng-if="nicknameEditable">
+                <input class="title" id="account_name"
+                       ng-model="user.nickname"
+                       size="30" type="text">
+              </div>
+
+              <div ng-if="!nicknameEditable">
+                {{ user.nickname }}
+                <button class="btn btn-default btn-xs" type="button" ng-click="setNicknameEditable()">edit nickname</button>
+              </div>
 
               <p>
                 <small>
                   This nickname is used for the group name of your own repositories.<br>
-                  ex) http://localhost:5000/{{ nickname }}/&lt;project name&gt;
+                  ex) http://localhost:5000/{{ user.nickname }}/&lt;project name&gt;
                 </small>
               </p>
             </div>

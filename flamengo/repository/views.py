@@ -8,8 +8,9 @@ import os
 import shutil
 from os import path as ospath
 
+import git
 import pygments
-from flask import Blueprint, current_app, jsonify, request
+from flask import Blueprint, current_app, jsonify, request, make_response
 from flask.ext.login import current_user
 from git import Repo as GitRepo
 from git import exc
@@ -29,8 +30,11 @@ def index():
     repos = {}
     groups = []
 
-    # username: nickname@domain.com
-    nickname = current_user.username.split('@')[0]
+    # no nickname
+    if current_user.nickname == '':
+        return make_response('', 301)
+
+    nickname = current_user.nickname
 
     # no own directory
     repo_dir = ospath.join(current_app.config['REPO_DIR'], nickname)
@@ -154,15 +158,19 @@ def trees(group, name, path=''):
     branch = path.split('/')[0]
 
     # get last commit
-    commit = next(rp.iter_commits(branch, max_count=1))
-    last_commit = dict(
-        hexsha=commit.hexsha,
-        message=commit.message,
-        email=commit.committer.email,
-        committer=str(
-            commit.committer) + ' <' + commit.committer.email + '>',
-        committed_date=util.pretty_date(commit.committed_date)
-    )
+    try:
+        commit = next(rp.iter_commits(branch, max_count=1))
+        last_commit = dict(
+            hexsha=commit.hexsha,
+            message=commit.message,
+            email=commit.committer.email,
+            committer=str(
+                commit.committer) + ' <' + commit.committer.email + '>',
+            committed_date=util.pretty_date(commit.committed_date)
+        )
+    except git.exc.GitCommandError:  # no commit and branch
+        last_commit = None
+        pass
 
     # change head to the branch
     ref = util.select_branch(rp, branch)

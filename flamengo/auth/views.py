@@ -1,14 +1,16 @@
 import hashlib
 import json
 import logging
+import os
 import time
 
 from flask import render_template, redirect, request, url_for, Blueprint, \
-    flash, jsonify
+    flash, jsonify, current_app
 from flask.ext.mail import Message
 from flask_login import login_user, logout_user, current_user
+from sqlalchemy import update
 from .forms import LoginForm, JoinForm
-from ..models import db, User
+from ..models import db, User, Repo
 
 auth = Blueprint('auth', __name__)
 
@@ -28,13 +30,25 @@ def me():
     return jsonify(dict(result=True, user=current_user.to_dict()))
 
 
-@auth.route('/save', methods=['POST'])
+@auth.route('/save', methods=['PUT'])
 def save():
     form = json.loads(request.data.decode('utf-8'))
     id = form.get('id')
     user = User.query.get(id)
+    old_nickname = user.nickname
     user.name = form.get('name')
     user.nickname = form.get('nickname')
+
+    if old_nickname != user.nickname and old_nickname != '':
+        # TODO transaction
+        stmt = update(Repo). \
+            where(Repo.group == old_nickname). \
+            values(group=user.nickname)
+        db.session.execute(stmt)
+
+        old_dir = os.path.join(current_app.config['REPO_DIR'], old_nickname)
+        new_dir = os.path.join(current_app.config['REPO_DIR'], user.nickname)
+        os.rename(old_dir, new_dir)
 
     if form.get('password', '') != '':
         user.password = form.get('password')
