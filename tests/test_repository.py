@@ -21,7 +21,7 @@ class RepositoryTester(TestCase):
         rv = self.get_signed_client().get(url_for('repository.index'))
         self.ae(rv.status_code, 200)
 
-        # repositories 요청 dict 키 화인
+        # check keys of repositories dictionary
         data = json.loads(rv.get_data(as_text=True))
         self.assertListEqual(sorted(list(data['repos']['group1'][0].keys())),
                              sorted(['id', 'name', 'description']))
@@ -53,6 +53,8 @@ class RepositoryTester(TestCase):
         self.ae(rv.status_code, 200)
         data = json.loads(rv.get_data(as_text=True))
         self.ae(len(data['list']), 10)  # empty repository
+        self.ae(data['last_commit']['message'],
+                'Fix groupId after package refactor')
 
     def test_index_commit(self):
         # show first commit

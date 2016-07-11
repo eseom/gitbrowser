@@ -8,7 +8,7 @@ define([], function () {
       }
     },
     controller: function profileCtrl($scope, $rootScope, $http, profile) {
-      $rootScope.title = 'profile';
+      $rootScope.title = 'Profile';
       $scope.user = profile.data.user;
 
       $scope.save = function () {

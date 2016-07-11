@@ -37,6 +37,23 @@
 
   <div class="panel-body">
 
+    <div>
+      <p class="pull-right">
+        <img src="/profile/image/{{ lastCommit.committer }}" style="max-width: 20px; vertical-align: top">
+        {{ lastCommit.committer }}
+      </p>
+
+      <div style="font-size: 90%">
+        last updated by {{ lastCommit.committed_date }}
+        (<a href ui-sref="commit({
+            group: stateParams.group,
+            repo: stateParams.repo,
+            hexsha:lastCommit.hexsha})">{{ lastCommit.hexsha }}</a>)
+      </div>
+      <div style="margin: 10px 0; padding: 10px; border: 1px solid #EFEFEF;">
+        <pre class="commit-message">{{ lastCommit.message }}</pre>
+      </div>
+    </div>
 
     <table class="table tree-table" ng-if="list.length > 0">
       <thead>
@@ -114,5 +131,5 @@
     </div>
 
     <!--<pagedown-editor content="data.content" ng-model="tt"></pagedown-editor>-->
+    </p>
   </div>
-</div>

@@ -36,6 +36,7 @@ define([], function () {
       $rootScope.title = 'source browser';
       $scope.branch = trees.data.current_branch;
       $scope.list = [];
+      $scope.lastCommit = trees.data.last_commit;
       $scope.commitCount = commitCount.data.count;
       $scope.cloneUrl = 'http://localhost:5000/' + group + '/' + repo;
       $scope.paths = path.split('/').slice(1);

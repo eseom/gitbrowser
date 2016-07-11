@@ -5,8 +5,10 @@ main views
 import base64
 from os import path as ospath
 
+from avatar_generator import Avatar as TextAvatar
 from flask import Blueprint, current_app, redirect, url_for, \
     request, Response
+from flask import make_response
 from flask.ext.login import current_user, login_required
 from . import git_http_backend
 from ..models import User
@@ -56,6 +58,16 @@ def html(path):
 @main.route('/show_debug')
 def show_debug():
     return '<body></body>'
+
+
+@main.route("/profile/image")
+@main.route("/profile/image/<string:email>")
+def photo(email=None):
+    if not email:
+        email = current_user.username
+    avatar = TextAvatar.generate(128, email)
+    headers = {'Content-Type': 'image/png'}
+    return make_response(avatar, 200, headers)
 
 
 def serve_repository(e):

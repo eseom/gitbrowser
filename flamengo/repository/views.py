@@ -149,8 +149,23 @@ def trees(group, name, path=''):
     :return:
     """
     rp = util.get_repo(group, name)
+
+    # get branch
+    branch = path.split('/')[0]
+
+    # get last commit
+    commit = next(rp.iter_commits(branch, max_count=1))
+    last_commit = dict(
+        hexsha=commit.hexsha,
+        message=commit.message,
+        email=commit.committer.email,
+        committer=str(
+            commit.committer) + ' <' + commit.committer.email + '>',
+        committed_date=util.pretty_date(commit.committed_date)
+    )
+
     # change head to the branch
-    ref = util.select_branch(rp, path)
+    ref = util.select_branch(rp, branch)
     try:
         rp.head.ref = ref
     except ValueError:  # select_branch return None
@@ -188,7 +203,8 @@ def trees(group, name, path=''):
             message=commit.message,
             date=util.pretty_date(commit.committed_date)
         )))
-    return jsonify(dict(list=tblist, current_branch=branch, branches=branches))
+    return jsonify(dict(list=tblist, current_branch=branch, branches=branches,
+                        last_commit=last_commit))
 
 
 @repository.route('/commit/<string:group>/<string:name>/<string:hexsha>')
