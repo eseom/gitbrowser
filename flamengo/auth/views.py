@@ -47,8 +47,9 @@ def save():
         db.session.execute(stmt)
 
         old_dir = os.path.join(current_app.config['REPO_DIR'], old_nickname)
-        new_dir = os.path.join(current_app.config['REPO_DIR'], user.nickname)
-        os.rename(old_dir, new_dir)
+        if os.path.exists(old_dir):
+            new_dir = os.path.join(current_app.config['REPO_DIR'], user.nickname)
+            os.rename(old_dir, new_dir)
 
     if form.get('password', '') != '':
         user.password = form.get('password')

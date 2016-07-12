@@ -8,6 +8,7 @@
 
   <!-- build:css -->
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="bower_components/angular-flash-alert/dist/angular-flash.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
   <link rel="stylesheet" href="vendor/diffview/diffview.css">
   <!-- endbuild -->
@@ -140,20 +141,7 @@
               </div>
             </div>
 
-            <!-- flash -->
-            <div ng-show="flash.message">
-              <div class="alert alert-info" style="margin: 10px 0 0">
-                <a href class="close" ng-click="flash.info = ''">&times;</a>
-                {{ flash.message }}
-              </div>
-            </div>
-            <div ng-show="flash.error">
-              <div class="alert alert-danger" style="margin: 10px 0 0">
-                <a href class="close" ng-click="flash.error = ''">&times;</a>
-                {{ flash.error }}
-              </div>
-            </div>
-            <!-- // flash -->
+            <flash-message duration="5000" show-close="true"></flash-message>
 
             <div ui-view></div>
 
@@ -164,8 +152,7 @@
   </div>
 </div>
 <!-- build:requirejs -->
-<script data-main="js/main"
-        src="bower_components/requirejs/require.js"></script>
+<script data-main="js/main" src="bower_components/requirejs/require.js"></script>
 <!-- endbuild -->
 </body>
 </html>

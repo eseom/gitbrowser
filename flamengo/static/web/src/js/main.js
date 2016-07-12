@@ -6,6 +6,7 @@ require.config({
     'angular-ui-router': '../bower_components/angular-ui-router/release/angular-ui-router',
     'angular-animate': '../bower_components/angular-animate/angular-animate',
     'angular-bootstrap': '../bower_components/angular-bootstrap/ui-bootstrap-tpls',
+    'angular-flash': '../bower_components/angular-flash-alert/dist/angular-flash',
     jquery: '../bower_components/jquery/dist/jquery',
     bootstrap: '../bower_components/bootstrap/dist/js/bootstrap',
     diffview: '../vendor/diffview/diffview'
@@ -24,6 +25,9 @@ require.config({
       deps: ['angular']
     },
     'angular-bootstrap': {
+      deps: ['angular']
+    },
+    'angular-flash': {
       deps: ['angular']
     },
     bootstrap: {

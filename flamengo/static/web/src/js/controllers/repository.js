@@ -26,10 +26,13 @@ define([], function () {
                                         $http,
                                         $uibModal,
                                         $stateParams,
-                                        repositories) {
+                                        repositories,
+                                        Flash) {
       /* no available nickname */
       if (repositories.status === 301) {
-        $rootScope.flashError('A nickname must be set before making a repository.');
+        Flash.create('info',
+          'You have to make a <strong>nickname</strong> for creating your own repositories.',
+          0, {class: 'flash-message'}, true);
         $state.go('profile');
         return false;
       }

@@ -26,7 +26,8 @@
     "angular-sanitize": "^1.5.7",
     "angular-bootstrap": "^1.3.3",
     "less": "^2.7.1",
-    "font-awesome": "^4.6.3"
+    "font-awesome": "^4.6.3",
+    "angular-flash-alert": "^2.3.0"
   },
   "resolutions": {
     "angular": "1.5.7"
