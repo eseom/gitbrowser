@@ -6,14 +6,27 @@
     <form>
       <fieldset class="form-group">
         <label for="group">Group</label>
-        <select class="form-control" id="group" ng-model="new.group">
+        <select class="form-control" id="group" ng-model="new.group" ng-change="validateName()">
           <option value="">select a group</option>
           <option ng-repeat="ag in availableGroups">{{ ag }}</option>
         </select>
       </fieldset>
       <fieldset class="form-group">
         <label for="name">repository name</label>
-        <input type="text" class="form-control" id="name" ng-model="new.name" placeholder="repository">
+        <input type="text" class="form-control" ng-change="validateName()" id="name" ng-model="new.name" placeholder="repository">
+
+        <div style="margin: 10px 0;" ng-if="validate.name.result !== ''">
+          <div ng-if="!validate.name.loading">
+                    <span class="label
+                      {{ validate.name.status ? 'label-success' : 'label-danger' }}"
+                      style="font-size: 90%; font-weight: normal">{{ validate.name.result }}</span>
+          </div>
+          <div ng-if="validate.name.loading">
+                    <span class="label label-default"
+                      style="font-size: 90%; font-weight: normal">wait...</span>
+          </div>
+        </div>
+
         <small class="text-muted">{{ liveurl }}</small>
       </fieldset>
       <fieldset class="form-group">
@@ -24,7 +37,7 @@
   </div>
   <div class="modal-footer">
     <button class="btn btn-primary btn-sm" type="button" ng-click="ok()">OK</button>
-    <button class="btn btn-warning btn-sm" type="button" ng-click="cancel()">Cancel
+    <button class="btn btn-default btn-sm" type="button" ng-click="cancel()">Cancel
     </button>
   </div>
 </section>

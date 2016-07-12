@@ -95,6 +95,19 @@ def create():
     return jsonify(dict(result=True))
 
 
+# TODO no test
+@repository.route('/show/<string:group>/<string:name>', methods=['GET'])
+@util.login_required_restful
+def show(group, name):
+    repo = Repo.query.filter(
+        (Repo.group == group),
+        (Repo.name == name),
+    ).first()
+    if repo:
+        return make_response('', 200)
+    return make_response('', 204)
+
+
 @repository.route('/<int:id>', methods=['DELETE'])
 @util.login_required_restful
 def destroy(id):
