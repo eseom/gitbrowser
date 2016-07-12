@@ -22,7 +22,19 @@
             <label for="account_name">username</label>
 
             <div class="form_field">
-              {{ user.username }}
+              <div ng-if="editable.username">
+                <input class="title"
+                       ng-model="user.username"
+                       size="30" type="text">
+              </div>
+              <div ng-if="!editable.username">
+                <span>{{ user.username }}</span>
+                <!--
+                <button class="btn btn-default btn-xs" type="button"
+                        ng-click="setUsernameEditable()">edit username
+                </button>
+                -->
+              </div>
             </div>
           </div>
           <div class="form_element">
@@ -31,7 +43,18 @@
             <div class="form_field">
               <input class="title"
                      ng-model="user.name"
-                     size="30" type="text">
+                     size="30" type="text" ng-change="validateName()">
+
+              <div style="margin: 10px 0;" ng-if="validate.name.result !== ''">
+                <div ng-if="!validate.name.loading">
+                    <span class="label {{ validate.name.status ? 'label-success' : 'label-danger' }}"
+                          style="font-size: 90%; font-weight: normal">{{ validate.name.result }}</span>
+                </div>
+                <div ng-if="validate.name.loading">
+                    <span class="label label-default"
+                          style="font-size: 90%; font-weight: normal">wait...</span>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -40,16 +63,30 @@
             <label for="account_name">Nickname</label>
 
             <div class="form_field">
-              <div ng-if="nicknameEditable">
+              <div ng-if="editable.nickname">
                 <input class="title" id="account_name"
                        ng-model="user.nickname"
-                       size="30" type="text">
+                       ng-change="validateNickname()"
+                       size="30" type="text" autocomplete="off">
+
+                <div style="margin: 10px 0;" ng-if="validate.nickname.result !== ''">
+                  <div ng-if="!validate.nickname.loading">
+                    <span class="label {{ validate.nickname.status ? 'label-success' : 'label-danger' }}"
+                          style="font-size: 90%; font-weight: normal">{{ validate.nickname.result }}</span>
+                  </div>
+                  <div ng-if="validate.nickname.loading">
+                    <span class="label label-default"
+                          style="font-size: 90%; font-weight: normal">wait...</span>
+                  </div>
+                </div>
               </div>
 
-              <div ng-if="!nicknameEditable">
+
+              <div ng-if="!editable.nickname">
                 {{ user.nickname }}
                 <button class="btn btn-default btn-xs" type="button"
-                ng-click="setNicknameEditable()">edit nickname</button>
+                        ng-click="setNicknameEditable()">edit nickname
+                </button>
               </div>
 
               <p>
