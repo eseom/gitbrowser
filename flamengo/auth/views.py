@@ -5,7 +5,7 @@ import os
 import time
 
 from flask import render_template, redirect, request, url_for, Blueprint, \
-    flash, jsonify, current_app
+    flash, jsonify, current_app, make_response
 from flask.ext.mail import Message
 from flask_login import login_user, logout_user, current_user
 from sqlalchemy import update
@@ -30,6 +30,15 @@ def me():
     return jsonify(dict(result=True, user=current_user.to_dict()))
 
 
+# TODO no test
+@auth.route('/nickname/<string:nickname>', methods=['POST'])
+def nickname(nickname):
+    user = User.query.filter(User.nickname == nickname).first()
+    if not user:
+        return make_response('', 404)
+    return make_response('', 200)
+
+
 @auth.route('/save', methods=['PUT'])
 def save():
     form = json.loads(request.data.decode('utf-8'))
@@ -48,7 +57,8 @@ def save():
 
         old_dir = os.path.join(current_app.config['REPO_DIR'], old_nickname)
         if os.path.exists(old_dir):
-            new_dir = os.path.join(current_app.config['REPO_DIR'], user.nickname)
+            new_dir = os.path.join(current_app.config['REPO_DIR'],
+                                   user.nickname)
             os.rename(old_dir, new_dir)
 
     if form.get('password', '') != '':
