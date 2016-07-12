@@ -19,11 +19,11 @@ define([], function () {
         var name = $scope.user.name.trim();
         var nickname = $scope.user.nickname.trim();
         if (nickname === '') {
-          Flash.create('danger', 'required nickname.', 0, {class: 'flash-message'}, true);
+          Flash.create('danger', 'required nickname.');
           return;
         }
         if (name === '') {
-          Flash.create('danger', 'required name.', 0, {class: 'flash-message'}, true);
+          Flash.create('danger', 'required name.');
           return;
         }
         var data = {
@@ -41,7 +41,7 @@ define([], function () {
           $scope.user.password = '';
           $scope.user.passwordConfirm = '';
 
-          Flash.create('success', 'Your information was saved.', 0, {class: 'flash-message'}, true);
+          Flash.create('success', 'Your information was saved.');
         });
       }
     }

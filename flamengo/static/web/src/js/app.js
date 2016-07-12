@@ -28,6 +28,7 @@ define([
     FlashProvider.setTimeout(5000);
     FlashProvider.setShowClose(true);
     FlashProvider.setOnDismiss();
+    // FlashProvider.setTemplatePreset('transclude');
     /**
      * http interceptor
      */

@@ -4,39 +4,35 @@ define([], function () {
     return $http({
       url: '/repositories',
       method: 'GET'
-    })
+    }).then(function (response) {
+      return response
+    });
   };
   return {
     url: '/repository/:group',
     resolve: {
-      repositories: function ($http) {
+      repositories: function ($http, $state, Flash) {
         return $http({
           url: '/repositories',
           method: 'GET'
         }).then(function (response) {
           return response
         }, function (response) {
-          return response
+          if (response.status === 301) {
+            /* no available nickname */
+            Flash.create('info',
+              'You have to make a <strong>nickname</strong> for creating your own repositories.');
+            $state.go('profile');
+            return false;
+          }
         });
       }
     },
     controller: function repositoryCtrl($scope,
                                         $rootScope,
-                                        $state,
                                         $http,
                                         $uibModal,
-                                        $stateParams,
-                                        repositories,
-                                        Flash) {
-      /* no available nickname */
-      if (repositories.status === 301) {
-        Flash.create('info',
-          'You have to make a <strong>nickname</strong> for creating your own repositories.',
-          0, {class: 'flash-message'}, true);
-        $state.go('profile');
-        return false;
-      }
-
+                                        repositories) {
       var repositoriesMap = {};
 
       $rootScope.title = 'repository';
