@@ -1,3 +1,7 @@
+"""
+unittest of repository view
+"""
+
 import json
 
 from flask import url_for
@@ -50,8 +54,8 @@ class RepositoryTester(TestCase):
         take = 10
         rv = self.get_signed_client().get(
             url_for('repository.commits',
-                    group='sample',
-                    name='sample-repo',
+                    rgroup='sample',
+                    rname='sample-repo',
                     branch='master',
                     take=take,
                     skip=0))
@@ -62,8 +66,8 @@ class RepositoryTester(TestCase):
     def test_index_tree(self):
         rv = self.get_signed_client().get(
             url_for('repository.trees',
-                    group='sample',
-                    name='sample-repo',
+                    rgroup='sample',
+                    rname='sample-repo',
                     path='master/'))
         self.ae(rv.status_code, 200)
         data = json.loads(rv.get_data(as_text=True))
@@ -75,8 +79,8 @@ class RepositoryTester(TestCase):
         # show first commit
         rv = self.get_signed_client().get(
             url_for('repository.commit',
-                    group='sample',
-                    name='sample-repo',
+                    rgroup='sample',
+                    rname='sample-repo',
                     hexsha='755fd577edcfd9209d0ac072eed3b022cbe4d39b'))
         self.ae(rv.status_code, 200)
         data = json.loads(rv.get_data(as_text=True))
@@ -87,8 +91,8 @@ class RepositoryTester(TestCase):
         # 755fd577edcfd9209d0ac072eed3b022cbe4d39b first comit
         rv = self.get_signed_client().get(
             url_for('repository.commit',
-                    group='sample',
-                    name='sample-repo',
+                    rgroup='sample',
+                    rname='sample-repo',
                     hexsha='32c273781bab599b955ce7c59d92c39bedf35db0'))
         self.ae(rv.status_code, 200)
         data = json.loads(rv.get_data(as_text=True))
@@ -97,8 +101,8 @@ class RepositoryTester(TestCase):
     def test_commit_count(self):
         rv = self.get_signed_client().get(
             url_for('repository.commit_count',
-                    group='sample',
-                    name='sample-repo',
+                    rgroup='sample',
+                    rname='sample-repo',
                     path='master'))
         self.ae(rv.status_code, 200)
         data = json.loads(rv.get_data(as_text=True))

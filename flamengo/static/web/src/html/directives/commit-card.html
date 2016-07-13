@@ -1,0 +1,14 @@
+<div class="commit-card">
+  <a href class="hexsha" ui-sref="commit({
+            rgroup: rgroup,
+            rname: rname,
+            hexsha: commit.hexsha})">{{ commit.hexsha }}</a>
+  <div class="body">
+    <img ng-src="/profile/image/{{ commit.email }}" style="max-width: 35px; float:left; margin-right: 10px;">
+    <span>{{ commit.date }}</span><br><strong>{{ commit.author }}</strong>
+
+    <div class="message">
+      <pre class="commit-message">{{ commit.message }}</pre>
+    </div>
+  </div>
+</div>

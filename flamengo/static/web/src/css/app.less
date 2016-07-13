@@ -16,83 +16,6 @@ body .intro-text {
   line-height: 20px !important;
 }
 
-/*
-html,
-body,
-div,
-span,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-abbr,
-address,
-cite,
-code,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-samp,
-small,
-strong,
-sub,
-sup,
-var,
-b,
-i,
-dl,
-dt,
-dd,
-ol,
-ul,
-li,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-article,
-aside,
-canvas,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section,
-summary,
-time,
-mark,
-audio,
-video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  vertical-align: baseline;
-  background: transparent;
-}
-*/
-
 body strong,
 body em,
 body b,
@@ -506,52 +429,57 @@ components
   margin-top: 10px;
 }
 
+/** commit-card */
+.commit-card {
+  .hexsha {
+    padding: 10px;
+    border: 1px solid #EFEFEF;
+    background-color: #F6F6F6;
+    background-color: #FAFAFA;
+    display: block;
+  }
+  .body {
+    padding: 10px;
+    border-left: 1px solid #efefef;
+    border-right: 1px solid #efefef;
+    border-bottom: 1px solid #efefef;
+  }
+  .message {
+    margin-top: 10px;
+  }
+}
+
 .commit-horizontal-box li {
   padding: 10px 0;
 }
 
-.commit-horizontal-box .hash-link {
-  padding: 10px;
-  border: 1px solid #EFEFEF;
-  background-color: #F6F6F6;
-  display: block;
-}
-
-.commit-horizontal-box .meta {
-  padding: 10px;
-  border-left: 1px solid #efefef;
-  border-right: 1px solid #efefef;
-  border-bottom: 1px solid #efefef;
-}
-
-.commit-horizontal-box .message {
+table.tree-table {
   margin-top: 10px;
+  td.icon {
+    width: 14px;
+    padding-left: 2px;
+    padding-right: 0;
+    text-align: left
+  }
+  td.name {
+    max-width: 180px;
+  }
+
+  td.commit {
+    max-width: 442px;
+  }
+
+  td.date {
+    text-align: right;
+  }
 }
 
-.tree-table td.icon {
-  width: 14px;
-  padding-left: 2px;
-  padding-right: 0;
-  text-align: left
-}
-
-.tree-table td.name {
-  max-width: 180px;
-}
-
-.tree-table td.commit {
-  max-width: 442px;
-}
-
-.tree-table td.date {
-  text-align: right;
-}
-
-pre {
+pre, code {
   font-family: 'Ubuntu Mono', monospace, Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 pre.commit-message {
+  font: 13px 'source sans pro', Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   background-color: transparent;
   border: 0;
   padding: 0;
@@ -1004,11 +932,17 @@ bootstrap
   padding: 8px;
 }
 
-.flash-message > div {
-  margin: 10px 0;
+.flash-message {
+  & > div {
+    margin: 10px 0;
+  }
+  .alert {
+    margin: 0;
+  }
 }
-.flash-message .alert {
-  margin: 0;
+
+.alert {
+  margin: 10px 0;
 }
 
 .alert-dismissable .close, .alert-dismissible .close {

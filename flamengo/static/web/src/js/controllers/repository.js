@@ -111,8 +111,8 @@ define([], function () {
       $scope.openEditModal = function (size, current) {
         var modalInstance = $uibModal.open({
           animation: true,
-          templateUrl: 'html/repository/new.html',
-          controller: 'repositoryNewCtrl',
+          templateUrl: 'html/repository/edit.html',
+          controller: 'repositoryEditCtrl',
           size: size,
           resolve: {
             repos: function () {

@@ -65,17 +65,17 @@
           </ul>
         </div>
 
-        <div class="section" ng-if="stateParams.group && stateParams.repo">
+        <div class="section" ng-if="stateParams.rgroup && stateParams.rname">
           <div class="title" style="font-weight: bold">
             <i class="fa fa-code"></i> source
           </div>
 
           <ul class="nav nav-pills nav-stacked">
             <li>
-              <a href ui-sref="trees({group: stateParams.group, repo: stateParams.repo, path: stateParams.branch || 'master'})"> source browser </a>
+              <a href ui-sref="trees({rgroup: stateParams.rgroup, rname: stateParams.rname, path: stateParams.branch || 'master'})"> source browser </a>
             </li>
             <li>
-              <a href ui-sref="commits({group: stateParams.group, repo: stateParams.repo, branch: stateParams.branch || 'master', take:15, skip:0})"> commits </a>
+              <a href ui-sref="commits({rgroup: stateParams.rgroup, rname: stateParams.rname, branch: stateParams.branch || 'master', take:15, skip:0})"> commits </a>
             </li>
           </ul>
         </div>

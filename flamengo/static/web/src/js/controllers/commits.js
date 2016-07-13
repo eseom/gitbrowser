@@ -1,17 +1,17 @@
 define([], function () {
   'use strict';
   return {
-    url: '/commits/:group/:repo/:branch/:take/:skip',
+    url: '/commits/:rgroup/:rname/:branch/:take/:skip',
     resolve: {
       commits: function ($http, $stateParams) {
-        var group = $stateParams.group,
-          repo = $stateParams.repo,
+        var rgroup = $stateParams.rgroup,
+          rname = $stateParams.rname,
           branch = $stateParams.branch,
           take = $stateParams.take,
           skip = $stateParams.skip;
         return $http({
           url: [
-            '/repositories/commits', group, repo, branch, take, skip
+            '/repositories/commits', rgroup, rname, branch, take, skip
           ].join('/'),
           method: 'GET'
         });

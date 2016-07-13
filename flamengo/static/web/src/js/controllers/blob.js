@@ -1,14 +1,14 @@
 define([], function () {
   'use strict';
   return {
-    url: '/blob/:group/:repo/{path:any}',
+    url: '/blob/:rgroup/:rname/{path:any}',
     resolve: {
       blob: function ($http, $stateParams) {
-        var group = $stateParams.group,
-          repo = $stateParams.repo,
+        var rgroup = $stateParams.rgroup,
+          rname = $stateParams.rname,
           path = $stateParams.path || '';
         return $http({
-          url: '/repositories/blob/' + group + '/' + repo + '/' + path,
+          url: '/repositories/blob/' + rgroup + '/' + rname + '/' + path,
           method: 'GET'
         });
       }

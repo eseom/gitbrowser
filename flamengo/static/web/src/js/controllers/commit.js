@@ -1,14 +1,14 @@
 define([], function () {
   'use strict';
   return {
-    url: '/commit/:group/:repo/:hexsha',
+    url: '/commit/:rgroup/:rname/:hexsha',
     resolve: {
       commit: function ($http, $stateParams) {
-        var group = $stateParams.group,
-          repo = $stateParams.repo,
+        var rgroup = $stateParams.rgroup,
+          rname = $stateParams.rname,
           hexsha = $stateParams.hexsha;
         return $http({
-          url: '/repositories/commit/' + group + '/' + repo + '/' + hexsha,
+          url: '/repositories/commit/' + rgroup + '/' + rname + '/' + hexsha,
           method: 'GET'
         });
       }

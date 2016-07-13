@@ -12,22 +12,9 @@
       <li ng-if="!list.length">
         <strong>'master' does not have any commits yet.</strong>
       </li>
-      <li ng-repeat="c in list">
-        <div class="">
-          <a class="hash-link"
-             style="font-size: 90%"
-             href
-             ui-sref="commit({group: stateParams.group, repo: stateParams.repo, hexsha:c.hexsha})">{{ c.hexsha }}</a>
-
-          <div class="meta">
-            <img src="/profile/image/{{ c.committer }}" style="max-width: 35px; float:left; margin-right: 10px;">
-            <span>{{ c.committed_date }}</span><br><strong>{{ c.committer }}</strong>
-
-            <div class="message">
-              <pre class="commit-message">{{ c.message }}</pre>
-            </div>
-          </div>
-        </div>
+      <li ng-repeat="commit in list">
+        <commit-card rgroup="stateParams.rgroup"
+          rname="stateParams.rname" commit="commit"></commit-card>
       </li>
     </ul>
   </div>

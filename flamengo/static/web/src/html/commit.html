@@ -3,14 +3,8 @@
   <div class="panel-header">
     <h4></h4>
 
-    <div class="alert alert-info">
-      <div class="pull-right">
-        {{ commit.committed_date }}
-        <strong>{{ commit.committer }}</strong>
-      </div>
-
-      <pre class="commit-message">{{ commit.message.trim() }}</pre>
-    </div>
+    <commit-card rgroup="stateParams.rgroup"
+      rname="stateParams.rname" commit="commit"></commit-card>
 
     <div class="alert alert-warning" ng-if="truncated">
       showing only 20 diffs of {{ countOfDiffs }}

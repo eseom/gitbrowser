@@ -24,6 +24,16 @@ from ..models import Repo, db, RepoRole
 repository = Blueprint('repository', __name__, static_folder='../static')
 
 
+def make_user_commit_object(commit):
+    return dict(
+        hexsha=commit.hexsha,
+        message=commit.message,
+        email=commit.committer.email,
+        author=str(commit.committer) + ' <' + commit.committer.email + '>',
+        date=util.pretty_date(commit.committed_date)
+    )
+
+
 @repository.route('', methods=['GET'])
 @util.login_required_restful
 def index():
@@ -126,10 +136,10 @@ def destroy(id):
     return jsonify(dict(result=True))
 
 
-@repository.route('/commit/count/<string:group>/<string:name>/<path:path>')
+@repository.route('/commit/count/<string:rgroup>/<string:rname>/<path:path>')
 @util.login_required_restful
-def commit_count(group, name, path):
-    rp = util.get_repo(group, name)
+def commit_count(rgroup, rname, path):
+    rp = util.get_repo(rgroup, rname)
     try:
         rp.head.ref = util.select_branch(rp, path)
         return jsonify(dict(count=rp.commit().count()))
@@ -139,33 +149,29 @@ def commit_count(group, name, path):
 
 
 @repository.route(
-    '/commits/<string:group>/<string:name>/<path:branch>/<int:take>/<int:skip>')
+    '/commits/<string:rgroup>/<string:rname>/<path:branch>/<int:take>/<int:skip>')
 @util.login_required_restful
-def commits(group, name, branch, take=10, skip=0):
-    rp = util.get_repo(group, name)
+def commits(rgroup, rname, branch, take=10, skip=0):
+    rp = util.get_repo(rgroup, rname)
     try:
-        commits = list([dict(
-            hexsha=l.hexsha,
-            message=l.message,
-            committer=str(l.committer) + ' <' + l.committer.email + '>',
-            committed_date=util.pretty_date(l.committed_date)
-        ) for l in rp.iter_commits(branch, max_count=take, skip=skip)])
+        commits = list([make_user_commit_object(l) for l in
+                        rp.iter_commits(branch, max_count=take, skip=skip)])
     except exc.GitCommandError:  # no commits
         commits = []
     branches = [str(h) for h in rp.heads]
     return jsonify(dict(result=True, commits=commits, branches=branches))
 
 
-@repository.route('/trees/<string:group>/<string:name>/<path:path>')
+@repository.route('/trees/<string:rgroup>/<string:rname>/<path:path>')
 @util.login_required_restful
-def trees(group, name, path=''):
+def trees(rgroup, rname, path=''):
     """
     :param group:
     :param name:
     :param path: include the branch as prefix
     :return:
     """
-    rp = util.get_repo(group, name)
+    rp = util.get_repo(rgroup, rname)
 
     # get branch
     branch = path.split('/')[0]
@@ -173,14 +179,7 @@ def trees(group, name, path=''):
     # get last commit
     try:
         commit = next(rp.iter_commits(branch, max_count=1))
-        last_commit = dict(
-            hexsha=commit.hexsha,
-            message=commit.message,
-            email=commit.committer.email,
-            committer=str(
-                commit.committer) + ' <' + commit.committer.email + '>',
-            committed_date=util.pretty_date(commit.committed_date)
-        )
+        last_commit = make_user_commit_object(commit)
     except git.exc.GitCommandError:  # no commit and branch
         last_commit = None
         pass
@@ -228,10 +227,10 @@ def trees(group, name, path=''):
                         last_commit=last_commit))
 
 
-@repository.route('/commit/<string:group>/<string:name>/<string:hexsha>')
+@repository.route('/commit/<string:rgroup>/<string:rname>/<string:hexsha>')
 @util.login_required_restful
-def commit(group, name, hexsha):
-    rp = util.get_repo(group, name)
+def commit(rgroup, rname, hexsha):
+    rp = util.get_repo(rgroup, rname)
 
     # get commit object
     commit = rp.commit(hexsha)
@@ -275,21 +274,16 @@ def commit(group, name, hexsha):
     return jsonify(dict(
         truncated=truncated,
         count_of_diffs=len(diffs),
-        commit=dict(
-            message=commit.message,
-            committer=str(
-                commit.committer) + ' <' + commit.committer.email + '>',
-            committed_date=util.pretty_date(commit.committed_date)
-        ),
+        commit=make_user_commit_object(commit),
         diff_contents=diff_contents,
         parents=parents,
     ))
 
 
-@repository.route('/blob/<string:group>/<string:name>/<path:path>')
+@repository.route('/blob/<string:rgroup>/<string:rname>/<path:path>')
 @util.login_required_restful
-def blob(group, name, path):
-    rp = util.get_repo(group, name)
+def blob(rgroup, rname, path):
+    rp = util.get_repo(rgroup, rname)
     ref = util.select_branch(rp, path)
     branch = ref.name
     path = path.replace(ref.name, '').strip('/')

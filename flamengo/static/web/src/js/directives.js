@@ -3,7 +3,8 @@ define([
   './directives/show-during-resolve',
   './directives/initial-loading-resolve',
   './directives/branch-indicator',
-  './directives/clone-indicator'
+  './directives/clone-indicator',
+  './directives/commit-card'
 ], function () {
   'use strict';
   /* new "directives" sub modules */

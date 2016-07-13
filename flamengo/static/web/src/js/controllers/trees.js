@@ -1,23 +1,23 @@
 define([], function () {
   'use strict';
   return {
-    url: '/trees/:group/:repo/{path:any}',
+    url: '/trees/:rgroup/:rname/{path:any}',
     resolve: {
       trees: function ($http, $stateParams) {
-        var group = $stateParams.group,
-          repo = $stateParams.repo,
+        var rgroup = $stateParams.rgroup,
+          rname = $stateParams.rname,
           path = $stateParams.path || '';
         return $http({
-          url: '/repositories/trees/' + group + '/' + repo + '/' + path,
+          url: '/repositories/trees/' + rgroup + '/' + rname + '/' + path,
           method: 'GET'
         });
       },
       commitCount: function ($http, $stateParams) {
-        var group = $stateParams.group,
-          repo = $stateParams.repo,
+        var rgroup = $stateParams.rgroup,
+          rname = $stateParams.rname,
           path = $stateParams.path || '';
         return $http({
-          url: '/repositories/commit/count/' + group + '/' + repo + '/' + path,
+          url: '/repositories/commit/count/' + rgroup + '/' + rname + '/' + path,
           method: 'GET'
         });
       }
@@ -29,8 +29,8 @@ define([], function () {
                                    $http,
                                    trees,
                                    commitCount) {
-      var group = $stateParams.group,
-        repo = $stateParams.repo,
+      var rgroup = $stateParams.rgroup,
+        rname = $stateParams.rname,
         path = $stateParams.path || '';
 
       $rootScope.title = 'source browser';
@@ -38,7 +38,7 @@ define([], function () {
       $scope.list = [];
       $scope.lastCommit = trees.data.last_commit;
       $scope.commitCount = commitCount.data.count;
-      $scope.cloneUrl = 'http://localhost:5000/' + group + '/' + repo;
+      $scope.cloneUrl = 'http://localhost:5000/' + rgroup + '/' + rname;
       $scope.paths = path.split('/').slice(1);
 
       /* */
@@ -53,16 +53,16 @@ define([], function () {
       $scope.back = function () {
         var p = path.split('/');
         var url = p.slice(0, p.length - 1).join('/');
-        $state.go('trees', {group: group, repo: repo, path: url})
+        $state.go('trees', {rgroup: rgroup, rname: rname, path: url})
       };
       $scope.gotoAnotherBranch = function (branch) {
-        $state.go('trees', {group: group, repo: repo, path: branch})
+        $state.go('trees', {rgroup: rgroup, rname: rname, path: branch})
       };
 
       $scope.message = {
         existingProject: 'git remote add origin ' + $scope.cloneUrl + '\n\
 git push --all',
-        newProject: 'project=\'' + $stateParams.repo + '\'\n\
+        newProject: 'project=\'' + $stateParams.rname + '\'\n\
 git clone ' + $scope.cloneUrl + '\n\
 cd $project\n\
 echo \\# $project > README.md\n\
