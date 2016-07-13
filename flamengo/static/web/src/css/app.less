@@ -129,14 +129,18 @@ header {
     &.right {
       border-left: 1px solid #d5d5d5;
       left: 290px;
+      overflow-x: auto;
+      > div {
+        min-width: 800px;
+      }
     }
   }
 }
 
 .main-panel {
   margin-top: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
 #flash div {
@@ -476,6 +480,7 @@ table.tree-table {
 
 pre, code {
   font-family: 'Ubuntu Mono', monospace, Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  border-radius: 0;
 }
 
 pre.commit-message {
@@ -488,9 +493,33 @@ pre.commit-message {
 
 pre code {
   padding: 0;
-  color: #c7254e;
+  color: #7858aa;
   background-color: #f9f2f4;
-  border-radius: 4px;
+}
+
+.markdown {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #EFEFEF;
+  h4.filename {
+    margin: 5px 0;
+    color: #aaa;
+  }
+  .title-hr {
+    margin: 10px 0 20px 0;
+  }
+  h1 {
+    font-size: 200%;
+    margin: 20px 0;
+  }
+  h2 {
+    font-size: 180%;
+    margin: 20px 0;
+  }
+  h2 {
+    font-size: 160%;
+    margin: 20px 0;
+  }
 }
 
 /* -----------------------

@@ -40,12 +40,30 @@ define([], function () {
       $scope.commitCount = commitCount.data.count;
       $scope.cloneUrl = 'http://localhost:5000/' + rgroup + '/' + rname;
       $scope.paths = path.split('/').slice(1);
+      $scope.readme = '';
 
       /* */
       var first = [];
       if (path !== $scope.branch)
         first = [{type: 'system', name: '(parent directory)'}];
       var list = first.concat(trees.data.list);
+
+      try {
+        var readme = list.filter(function (it) {
+          return it.name === 'README.md'
+        })[0];
+        if (typeof readme === 'undefined')
+          throw 'no readme'
+        $http.get('/repositories/blob/' + rgroup + '/' + rname + '/' + path + '/README.md').success(function (response) {
+          /* TODO wrap into directive */
+          var text = response.blob_raw_content;
+
+          var converter = Markdown.getSanitizingConverter()
+          Markdown.Extra.init(converter);
+          $scope.readme = converter.makeHtml(text);
+        });
+      } catch (e) {
+      }
 
       $scope.list = list;
       $scope.branches = trees.data.branches;

@@ -294,7 +294,7 @@ def blob(rgroup, rname, path):
             tree = tree[p]
 
     blob_name = tree.name
-    blob_content = tree.data_stream.read().decode('utf-8')
+    blob_raw_content = tree.data_stream.read().decode('utf-8')
 
     # monkey patching
     from pygments.lexers.configs import NginxConfLexer
@@ -304,15 +304,18 @@ def blob(rgroup, rname, path):
 
     # set lexer
     try:
-        lexer = guess_lexer_for_filename(blob_name, blob_content)
+        lexer = guess_lexer_for_filename(blob_name, blob_raw_content)
     except pygments.util.ClassNotFound:
         lexer = TextLexer()
 
     # stripnl option for lexer
     lexer.stripnl = False
 
-    blob_content = highlight(blob_content, lexer, HtmlFormatter(
+    blob_content = highlight(blob_raw_content, lexer, HtmlFormatter(
         linenos='table',
         style='colorful'))
 
-    return jsonify(dict(blob_content=blob_content, path=path, branch=branch))
+    return jsonify(dict(
+        blob_raw_content=blob_raw_content,
+        blob_content=blob_content,
+        path=path, branch=branch))
