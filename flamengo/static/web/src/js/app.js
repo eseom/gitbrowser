@@ -8,7 +8,9 @@ define([
   'controllers',
   'directives',
   'filters',
-  'services'
+  'services',
+
+  'markdown-angular-pagedown'
 ], function (angular) {
   'use strict';
   var app = angular.module('flamengo', [
@@ -20,7 +22,8 @@ define([
     'ui.bootstrap',
     'ngAnimate',
     'ngSanitize',
-    'ngFlash'
+    'ngFlash',
+    'ui.pagedown'
   ]).config(function ($httpProvider, FlashProvider) {
     /**
      * angular flash

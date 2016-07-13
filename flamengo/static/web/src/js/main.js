@@ -9,30 +9,31 @@ require.config({
     'angular-flash': '../bower_components/angular-flash-alert/dist/angular-flash',
     jquery: '../bower_components/jquery/dist/jquery',
     bootstrap: '../bower_components/bootstrap/dist/js/bootstrap',
-    diffview: '../vendor/diffview/diffview'
+    diffview: '../vendor/diffview/diffview',
+
+    /** markdown editor */
+    'markdown-converter': '../bower_components/pagedown/Markdown.Converter',
+    'markdown-sanitizer': '../bower_components/pagedown/Markdown.Sanitizer',
+    'markdown-extra': '../bower_components/pagedown/Markdown.Extra',
+    'markdown-editor': '../bower_components/pagedown/Markdown.Editor',
+    'markdown-angular-pagedown': '../bower_components/angular-pagedown/angular-pagedown'
   },
   shim: {
-    angular: {
-      exports: 'angular'
+    angular: {exports: 'angular'},
+    bootstrap: {deps: ['jquery']},
+    'angular-sanitize': {deps: ['angular']},
+    'angular-ui-router': {deps: ['angular']},
+    'angular-animate': {deps: ['angular']},
+    'angular-bootstrap': {deps: ['angular']},
+    'angular-flash': {deps: ['angular']},
+
+    /** markdown editor */
+    'markdown-angular-pagedown': {
+      deps: ['markdown-converter', 'markdown-sanitizer', 'markdown-extra', 'markdown-editor']
     },
-    'angular-sanitize': {
-      deps: ['angular']
-    },
-    'angular-ui-router': {
-      deps: ['angular']
-    },
-    'angular-animate': {
-      deps: ['angular']
-    },
-    'angular-bootstrap': {
-      deps: ['angular']
-    },
-    'angular-flash': {
-      deps: ['angular']
-    },
-    bootstrap: {
-      deps: ['jquery']
-    }
+    'markdown-editor': {deps: ['markdown-extra']},
+    'markdown-extra': {deps: ['markdown-sanitizer']},
+    'markdown-sanitizer': {deps: ['markdown-converter']}
   }
 });
 
