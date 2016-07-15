@@ -19,7 +19,7 @@
 
     <div class="alert alert-info" ng-if="commitCount">
       <div>
-        <a href ui-sref="commits({group: stateParams.group, repo: stateParams.repo, branch: branch, take:15, skip:0})">
+        <a href ui-sref="commits({rgroup: stateParams.rgroup, rname: stateParams.rname, branch: branch, take:15, skip:0})">
           {{ commitCount | number }} commit<span ng-if="commitCount > 1">s</span></a>
       </div>
     </div>

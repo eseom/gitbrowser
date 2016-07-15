@@ -29,7 +29,7 @@ require.config({
 
     /** markdown editor */
     'markdown-angular-pagedown': {
-      deps: ['markdown-converter', 'markdown-sanitizer', 'markdown-extra', 'markdown-editor']
+      deps: ['angular', 'markdown-converter', 'markdown-sanitizer', 'markdown-extra', 'markdown-editor']
     },
     'markdown-editor': {deps: ['markdown-extra']},
     'markdown-extra': {deps: ['markdown-sanitizer']},
