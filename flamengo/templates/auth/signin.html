@@ -4,8 +4,6 @@
 
   {{ super() }}
 
-  <div class="container">
-    <div style="width: 40%; margin: 0 auto; margin-top: 30px;">
       {% with messages = get_flashed_messages() %}
         {% if messages %}
           {% for message in messages %}
@@ -38,7 +36,5 @@
         </div>
         <button type="submit" class="btn btn-default">Sign in</button>
       </form>
-    </div>
-  </div>
 
 {% endblock %}
