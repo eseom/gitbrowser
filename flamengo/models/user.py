@@ -4,7 +4,8 @@ from datetime import datetime
 
 from sqlalchemy import event
 from sqlalchemy.orm import relationship, synonym
-from .base import db, sa_unicode, sa_serial, sa_boolean, sa_datetime
+from .base import db, sa_unicode, sa_serial, sa_boolean, sa_datetime, \
+    insert_inserted_listener, update_updated_listener
 
 
 def _get_encrypted_password(password):
@@ -70,18 +71,8 @@ class User(db.Model):
         return '<User: %s>' % (self.username,)
 
 
-def insert_inserted_listener(mapper, connection, target):
-    target.created_at = datetime.now()
-
-
-def update_updated_listener(mapper, connection, target):
-    target.updated_at = datetime.now()
-
-
-event.listen(User, 'before_insert', insert_inserted_listener,
-             propagate=True)
-event.listen(User, 'before_update', update_updated_listener,
-             propagate=True)
+event.listen(User, 'before_insert', insert_inserted_listener, propagate=True)
+event.listen(User, 'before_update', update_updated_listener, propagate=True)
 
 
 class Alias(db.Model):
