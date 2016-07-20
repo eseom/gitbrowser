@@ -48,6 +48,14 @@ class TestCase(unittest.TestCase, Asserter):
         from tests.fixtures import users as fixtures_users
         self.load_fixture_from_dict(db, fixtures_users.dataset)
 
+    def load_repos_fixture(self):
+        from tests.fixtures import repos as fixtures_repos
+        self.load_fixture_from_dict(db, fixtures_repos.dataset)
+
+    def load_tickets_fixture(self):
+        from tests.fixtures import tickets as fixtures_tickets
+        self.load_fixture_from_dict(db, fixtures_tickets.dataset)
+
     def setUp(self):
         self.app = create_app('test')
         dir = os.path.dirname(os.path.realpath(__file__))

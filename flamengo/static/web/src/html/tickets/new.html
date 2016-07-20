@@ -1,0 +1,30 @@
+<section>
+  <div class="modal-header">
+    <h3 class="modal-title">new ticket</h3>
+  </div>
+  <div class="modal-body">
+    <form>
+      <fieldset class="form-group">
+        <label for="summary">summary</label>
+        <input type="text" class="form-control" ng-change="validateSummary()" id="summary"
+          ng-model="new.summary" placeholder="summary">
+
+        <div style="margin: 10px 0;" ng-if="validate.summary.result !== ''">
+            <span class="label
+              {{ validate.summary.status ? 'label-success' : 'label-danger' }}"
+              style="font-size: 90%; font-weight: normal">{{ validate.summary.result }}</span>
+        </div>
+      </fieldset>
+      <fieldset class="form-group">
+        <label for="content">content</label>
+        <textarea class="form-control" ng-model="new.content" id="content"
+          placeholder="content" rows="3"></textarea>
+      </fieldset>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary btn-sm" type="button" ng-click="ok()">OK</button>
+    <button class="btn btn-default btn-sm" type="button" ng-click="cancel()">Cancel
+    </button>
+  </div>
+</section>

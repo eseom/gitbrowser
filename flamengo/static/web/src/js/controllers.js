@@ -7,6 +7,9 @@ define([
   './controllers/trees',
   './controllers/profile',
 
+  './controllers/tickets',
+  './controllers/tickets/new',
+
   './controllers/repository/new',
   './controllers/repository/edit'
 ], function (angular) {

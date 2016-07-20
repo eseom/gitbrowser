@@ -21,7 +21,7 @@ class Repo(db.Model):
     name = sa_unicode(256)
     created_at = sa_datetime()
     updated_at = sa_datetime()
-    type = sa_integer()
+    type = sa_unicode()
     description = sa_text()
 
     # relation

@@ -1,0 +1,37 @@
+<div class="panel main-panel">
+
+  <div class="panel-header">
+    <div class="pull-right">
+      <button type="button" class="btn btn-xs btn-default"
+        ng-click="create()">create
+      </button>
+    </div>
+    <h4>all tickets</h4>
+  </div>
+
+  <div class="panel-body">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>id</th>
+        <th>summary</th>
+        <th>issued at</th>
+        <th>assigner</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-if="!tickets.length">
+        <td colspan="10">no tickets, <a href ng-click="create()">create new!</a></td>
+      </tr>
+      <tr ng-if="tickets.length" ng-repeat="ticket in tickets">
+        <td>{{ ticket.id }}</td>
+        <td>{{ ticket.summary }}</td>
+        <td>{{ ticket.created_at }}</td>
+        <td>{{ ticket.user.nickname }}</td>
+      </tr>
+      </tbody>
+    </table>
+    <div id="diffContents">
+    </div>
+  </div>
+</div>

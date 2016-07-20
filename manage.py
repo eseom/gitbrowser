@@ -282,7 +282,6 @@ def admin():
 
 
 def sink_manager():
-    print(parse_options())
     app = create_app(parse_options())
 
     def app_get_uri(dummy):

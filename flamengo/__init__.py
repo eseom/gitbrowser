@@ -42,10 +42,12 @@ def create_app(env='dev'):
 def register_blueprint(app):
     from .auth.views import auth
     from .repository.views import repository
+    from .issue.views import issue
     from .main.views import main, serve_repository
 
     app.register_blueprint(main)
     app.register_blueprint(repository, url_prefix='/repositories')
+    app.register_blueprint(issue, url_prefix='/issue')
     app.register_blueprint(auth, url_prefix='/auth')
 
     @app.errorhandler(404)
