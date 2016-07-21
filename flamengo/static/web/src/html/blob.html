@@ -1,6 +1,10 @@
 <div class="panel main-panel">
   <div class="panel-header">
-    <h4>/{{ path }}</h4>
+    <ul class="list-inline subtitle">
+      <li ng-if="!paths.length">/</li>
+      <li ng-repeat-start="p in paths">/</li>
+      <li ng-repeat-end>{{ p }}</li>
+    </ul>
   </div>
 
   <div class="panel-body">

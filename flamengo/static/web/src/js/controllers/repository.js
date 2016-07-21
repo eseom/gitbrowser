@@ -35,7 +35,7 @@ define([], function () {
                                         repositories) {
       var repositoriesMap = {};
 
-      $rootScope.title = 'repository';
+      $rootScope.title = 'Repository';
       $scope.repos = repositories.data.repos;
 
       var load = function (_repos) {

@@ -9,10 +9,9 @@
         <input type="text" class="form-control" ng-change="validateSummary()" id="summary"
           ng-model="new.summary" placeholder="summary">
 
-        <div style="margin: 10px 0;" ng-if="validate.summary.result !== ''">
+        <div class="validation-badge" ng-if="validate.summary.result !== ''">
             <span class="label
-              {{ validate.summary.status ? 'label-success' : 'label-danger' }}"
-              style="font-size: 90%; font-weight: normal">{{ validate.summary.result }}</span>
+              {{ validate.summary.status ? 'label-success' : 'label-danger' }}">{{ validate.summary.result }}</span>
         </div>
       </fieldset>
       <fieldset class="form-group">

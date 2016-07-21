@@ -13,9 +13,13 @@ define([], function () {
         });
       }
     },
-    controller: function blobCtrl($scope, $state, $sce, $stateParams, $http, blob) {
+    controller: function blobCtrl($rootScope, $scope, $state, $sce, $stateParams, $http, blob) {
+      var rgroup = $stateParams.rgroup,
+        rname = $stateParams.rname;
+
+      $rootScope.title = rgroup + '/' + rname;
       $scope.blob_content = blob.data.blob_content;
-      $scope.path = blob.data.path;
+      $scope.paths = blob.data.path.split('/');
     }
   }
 });

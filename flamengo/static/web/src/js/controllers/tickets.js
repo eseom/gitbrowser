@@ -24,10 +24,9 @@ define([], function () {
                                      $stateParams,
                                      $http,
                                      tickets) {
-      $rootScope.title = 'tickets';
-
       var rgroup = $stateParams.rgroup,
         rname = $stateParams.rname;
+      $rootScope.title = rgroup + '/' + rname;
 
       var load = function (tickets) {
         $scope.tickets = tickets.data.tickets;

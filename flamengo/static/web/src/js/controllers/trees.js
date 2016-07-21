@@ -33,7 +33,7 @@ define([], function () {
         rname = $stateParams.rname,
         path = $stateParams.path || '';
 
-      $rootScope.title = 'source browser';
+      $rootScope.title = rgroup + '/' + rname;
       $scope.branch = trees.data.current_branch;
       $scope.list = [];
       $scope.lastCommit = trees.data.last_commit;

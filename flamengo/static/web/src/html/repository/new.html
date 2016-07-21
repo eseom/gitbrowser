@@ -15,15 +15,14 @@
         <label for="name">repository name</label>
         <input type="text" class="form-control" ng-change="validateName()" id="name" ng-model="new.name" placeholder="repository">
 
-        <div style="margin: 10px 0;" ng-if="validate.name.result !== ''">
+        <div class="validation-badge" ng-if="validate.name.result !== ''">
           <div ng-if="!validate.name.loading">
                     <span class="label
-                      {{ validate.name.status ? 'label-success' : 'label-danger' }}"
-                      style="font-size: 90%; font-weight: normal">{{ validate.name.result }}</span>
+                      {{ validate.name.status ? 'label-success' : 'label-danger' }}">
+                      {{ validate.name.result }}</span>
           </div>
           <div ng-if="validate.name.loading">
-                    <span class="label label-default"
-                      style="font-size: 90%; font-weight: normal">wait...</span>
+            <span class="label label-default">wait...</span>
           </div>
         </div>
 

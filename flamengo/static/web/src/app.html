@@ -37,11 +37,10 @@
 
 <header>
   <div class="center">
-    <a href style="font-size: 16px;">Flamengo</a>
+    <a href class="brand">Flamengo</a>
   </div>
   <div class="right">
-        <span style="color: #aaa; margin-right: 10px;" show-during-resolve>
-          Loading...</span>
+    <span class="show-during-resolve">Loading...</span>
   </div>
   <div class="clear"></div>
 </header>
@@ -49,7 +48,7 @@
 <div class="main-navigation">
   <a class="dashboard toolbar-link active" href title="홈">
     <span class="accessible-hidden-text">홈</span>
-    <i class="fa fa-home" style="font-size: 190%"></i>
+    <i class="fa fa-home"></i>
   </a>
 </div>
 
@@ -58,7 +57,7 @@
     <div class="pane left">
       <div class="stacked-menu">
         <div class="section">
-          <div class="title" style="font-weight: bold">
+          <div class="title">
             <i class="fa fa-dashboard"></i> control
           </div>
           <ul class="nav nav-pills nav-stacked">
@@ -67,7 +66,7 @@
         </div>
 
         <div class="section" ng-if="stateParams.rgroup && stateParams.rname">
-          <div class="title" style="font-weight: bold">
+          <div class="title">
             <i class="fa fa-code"></i> source
           </div>
 
@@ -85,7 +84,7 @@
         </div>
 
         <div class="section">
-          <div class="title" style="font-weight: bold">
+          <div class="title">
             <i class="fa fa-user"></i> user
           </div>
 
@@ -103,44 +102,16 @@
     <div class="pane right section">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-sm-12" style="padding-top: 16px">
+          <div class="col-sm-12">
             <div class="header">
               <div class="stripe stripe-blue">
-                <h4 class="title" style="margin-left: 10px;">
+                <h4 class="title">
                   <svg aria-hidden="true" class="octicon octicon-repo" height="16"
                        version="1.1" viewBox="0 0 12 16" width="12">
                     <path
                       d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"></path>
                   </svg>
-                  <span ng-if="title">{{ title }}</span>
-                    <span ng-if="!title">
-                      <span ng-if="!stateParams.group">
-                        <ul class="list-inline subtitle">
-                          <li>
-                            any group or repository was not selected
-                          </li>
-                        </ul>
-                      </span>
-                      <span ng-if="stateParams.group && !stateParams.repo">
-                        <ul class="list-inline subtitle">
-                          <li>
-                            repositories of {{ stateParams.group }}
-                          </li>
-                        </ul>
-                      </span>
-                      <span ng-if="stateParams.group && stateParams.repo">
-                        <ul class="list-inline subtitle">
-                          <li>
-                            <a href ui-sref="dashboard({group: stateParams.group})">{{ stateParams.group }}</a>
-                          </li>
-                          <li>/</li>
-                          <li>
-                            <a href
-                               ui-sref="tree({group: stateParams.group, repo: stateParams.repo, path: 'master'})">{{ stateParams.repo }}</a>
-                          </li>
-                        </ul>
-                      </span>
-                    </span>
+                  <span ng-if="title" ng-bind-html="title"></span>
                 </h4>
               </div>
             </div>

@@ -20,7 +20,9 @@ define([], function () {
                                     $stateParams,
                                     $http,
                                     commit) {
-      $rootScope.title = 'commit';
+      var rgroup = $stateParams.rgroup,
+        rname = $stateParams.rname;
+      $rootScope.title = rgroup + '/' + rname + ' <span class="sub">commit</span>';
       var hexsha = $stateParams.hexsha || '';
       commit.data.diff_contents.forEach(function (data) {
         angular.element(document.getElementById('diffContents')).append(

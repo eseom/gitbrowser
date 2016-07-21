@@ -23,7 +23,9 @@ define([], function () {
                                      $stateParams,
                                      $http,
                                      commits) {
-      $rootScope.title = 'commits';
+      var rgroup = $stateParams.rgroup,
+        rname = $stateParams.rname;
+      $rootScope.title = rgroup + '/' + rname;
       $scope.branches = commits.data.branches;
       $scope.list = commits.data.commits;
       $scope.gotoAnotherBranch = function (branch) {

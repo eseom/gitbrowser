@@ -1,17 +1,9 @@
 <div class="panel main-panel">
 
   <div class="panel-header">
-    <div ng-if="stateParams.group && stateParams.repo">
+    <div ng-if="stateParams.rgroup && stateParams.rname">
       <ul class="list-inline subtitle">
-        <li>
-          <a href ui-sref="repository({group: stateParams.group})">{{ stateParams.group }}</a>
-        </li>
-        <li>/</li>
-        <li>
-          <a href
-             ui-sref="trees({group: stateParams.group, repo: stateParams.repo, path: 'master'})">{{ stateParams.repo }}</a>
-        </li>
-
+        <li ng-if="!paths.length">/</li>
         <li ng-repeat-start="p in paths">/</li>
         <li ng-repeat-end>{{ p }}</li>
       </ul>
@@ -31,7 +23,7 @@
       branches="branches"
       currentbranch="branch"
       urlcallback="gotoAnotherBranch"
-      style="margin-bottom: 10px;"></branch-indicator>
+      class="branch-indicator"></branch-indicator>
 
   </div>
 
@@ -114,8 +106,8 @@
       </div>
     </div>
 
-    <div ng-if="list.length === 0" style="margin-top: 10px;">
-      <p style="margin-top: 10px;">
+    <div ng-if="list.length === 0" class="instruction">
+      <p class="message">
         <strong>'master' does not have any commits yet.</strong>
       </p>
       <hr>

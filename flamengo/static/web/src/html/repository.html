@@ -8,7 +8,7 @@
     <h4>all repositories</h4>
   </div>
   <div class="panel-body">
-    <table class="table">
+    <table class="table repository-table">
       <thead>
       <tr>
         <th>name</th>
@@ -21,7 +21,7 @@
       <tr ng-if="!repos[g].length">
         <td>no repositories, <a href ng-click="create()">create new!</a></td>
       </tr>
-      <tr ng-repeat="r in repos[g]" style="margin-bottom: 5px;">
+      <tr ng-repeat="r in repos[g]">
         <td>
           <a href ui-sref="trees({rgroup:g, rname:r.name, path: 'master'})">{{ r.name }}</a>
         </td>

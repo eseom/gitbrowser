@@ -2,6 +2,7 @@ define([], function () {
   return function showDuringResolve($rootScope,
                                     $timeout) {
     return {
+      restrict: 'C',
       link: function (scope, element) {
         $(element).addClass('ng-hide');
         var unregister1 = $rootScope.$on('$stateChangeStart', function () {
